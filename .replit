@@ -28,6 +28,10 @@ args = "artifacts/tara-ev: web"
 task = "workflow.run"
 args = "artifacts/mockup-sandbox: Component Preview Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "verify-wording"
+
 [[workflows.workflow]]
 name = "verify-removals"
 author = "agent"
@@ -38,6 +42,17 @@ args = "artifacts/tara-ev/scripts/verify-removals.sh"
 
 [workflows.workflow.metadata]
 isValidation = true
+
+[[workflows.workflow]]
+name = "verify-wording"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "artifacts/tara-ev/scripts/verify-wording.sh"
+
+[workflows.workflow.metadata]
+outputType = "console"
 
 [agent]
 stack = "PNPM_WORKSPACE"
