@@ -93,7 +93,7 @@ export default function App() {
         injectStructuredData(path, meta.title);
 
         // Update per-route meta: canonical, description, OG, Twitter Card.
-        const siteOrigin = 'https://taragolfcart.com';
+        const siteOrigin = 'https://taramsv.com';
         const canonicalUrl = `${siteOrigin}${path}`;
 
         // Canonical link tag
@@ -161,7 +161,7 @@ export default function App() {
               </div>
               <div class="tfc-copy">
                 <p class="tfc-kicker">&#9733; Limited-Time Offer</p>
-                <h2 class="tfc-title">0% Financing on TARA Golf Carts</h2>
+                <h2 class="tfc-title">0% Financing on TARA Medium Speed Vehicles</h2>
                 <p class="tfc-sub">Drive home your TARA today &mdash; 0% financing options for up to <strong>36 months</strong>.</p>
               </div>
               <div class="tfc-action">
@@ -179,17 +179,17 @@ export default function App() {
           footer.innerHTML = `
             <div class="tf-inner">
               <div class="tf-col tf-brand">
-                <img src="${BASE}images/tara-nev-logo.png" alt="TARA Neighborhood Electric Vehicles" />
-                <p>TARA Neighborhood Electric Vehicles — sales, service, and support for electric golf carts, NEVs, and utility vehicles.</p>
+                <img src="${BASE}images/tara-nev-logo.png" alt="TARA Medium Speed Vehicles" />
+                <p>TARA Medium Speed Vehicles — sales, service, and support for electric medium speed vehicles, MSVs, and utility vehicles.</p>
                 <p class="tf-disclaimer">We are an independent, authorized dealership selling TARA vehicles. We are not TARA, the manufacturer.</p>
                 <a class="tf-phone" href="tel:8448443432">&#9742; 844-844-3432</a>
               </div>
               <div class="tf-col">
                 <h4>Vehicles</h4>
-                <a href="/t1-series/">T1 Golf Cart Series</a>
-                <a href="/t2-series/">T2 Utility Golf Cart Series</a>
+                <a href="/t1-series/">T1 Medium Speed Vehicle Series</a>
+                <a href="/t2-series/">T2 Utility Medium Speed Vehicle Series</a>
                 <a href="/t3-series/">T3 Street Legal Series</a>
-                <a href="/fleet-golf-carts/">Fleet Golf Carts</a>
+                <a href="/fleet-golf-carts/">Fleet Medium Speed Vehicles</a>
                 <a href="/accessories/">Accessories</a>
               </div>
               <div class="tf-col">
@@ -223,7 +223,7 @@ export default function App() {
               </div>
             </div>
             <div class="tf-bottom">
-              <span>&copy; ${new Date().getFullYear()} TARA Neighborhood Electric Vehicles. All rights reserved.</span>
+              <span>&copy; ${new Date().getFullYear()} TARA Medium Speed Vehicles. All rights reserved.</span>
               <span class="tf-legal">
                 <a href="/privacy-policy/">Privacy Policy</a>
                 <a href="/terms-and-conditions/">Terms &amp; Conditions</a>

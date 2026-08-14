@@ -1,5 +1,5 @@
-# Crawler & Bot Permissions — TARA Neighborhood Electric Vehicles
-Policy: All legitimate crawlers are permitted full access to https://taranev.com. Crawl-delay: 0.
+# Crawler & Bot Permissions — TARA Medium Speed Vehicles
+Policy: All legitimate crawlers are permitted full access to https://taramsv.com. Crawl-delay: 0.
 Categories allowed: search engines (Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot), AI crawlers (GPTBot, ClaudeBot, Google-Extended, CCBot, PerplexityBot, Applebot, Amazonbot), social bots (facebookexternalhit, Twitterbot, LinkedInBot, Pinterestbot, WhatsApp, Discordbot), SEO tools (AhrefsBot, SemrushBot, MJ12bot, DotBot, rogerbot), archiving (ia_archiver, archive.org_bot), academic/research crawlers, e-commerce and price-comparison bots, news aggregators, mobile crawlers, accessibility and voice-assistant bots.
-Sitemaps: https://taranev.com/sitemap.xml
-See also: https://taranev.com/robots.txt
+Sitemaps: https://taramsv.com/sitemap.xml
+See also: https://taramsv.com/robots.txt

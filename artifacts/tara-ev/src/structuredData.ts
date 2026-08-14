@@ -1,13 +1,13 @@
 /**
- * JSON-LD structured data generator for TARA Electric Vehicles.
+ * JSON-LD structured data generator for TARA Medium Speed Vehicles.
  *
  * Produces schema.org markup as a plain object (to be serialised via
  * JSON.stringify).  One schema block is injected into <head> per route
  * navigation; the helper `injectStructuredData` handles the DOM write.
  */
 
-const SITE_URL = 'https://www.taragolfcart.com';
-const SITE_NAME = 'TARA Electric Vehicles';
+const SITE_URL = 'https://www.taramsv.com';
+const SITE_NAME = 'TARA Medium Speed Vehicles';
 const LOGO_URL = `${SITE_URL}/images/tara-nev-logo.png`;
 const PHONE = '+1-844-844-3432';
 
@@ -49,8 +49,8 @@ function buildOrganization() {
       availableLanguage: 'English',
     },
     sameAs: [
-      'https://www.facebook.com/taragolfcart',
-      'https://www.instagram.com/taragolfcart',
+      'https://www.facebook.com/taramsv',
+      'https://www.instagram.com/taramsv',
     ],
   };
 }
@@ -110,7 +110,7 @@ function buildBreadcrumb(path: string, pageTitle: string) {
 /** Strip common site-name suffixes from route titles to get a clean page name. */
 function stripSiteSuffix(title: string): string {
   return title
-    .replace(/\s*[-|]\s*TARA (ELECTRIC VEHICLE(S)?|Neighborhood Electric Vehicles).*$/i, '')
+    .replace(/\s*[-|]\s*TARA (MEDIUM SPEED VEHICLE(S)?|Medium Speed Vehicles).*$/i, '')
     .replace(/\s*[-|]\s*TARA$/i, '')
     .trim();
 }
@@ -119,11 +119,11 @@ function buildProduct(path: string, title: string) {
   const name = stripSiteSuffix(title).replace(/\s*\|\s*.*$/, '').trim();
 
   // Choose a category label based on the path
-  let category = 'Electric Golf Cart';
+  let category = 'Electric Medium Speed Vehicle';
   if (path.includes('turfman') || path.includes('utility')) {
     category = 'Electric Utility Vehicle';
   } else if (path.includes('t3') || path.includes('roadster') || path.includes('explorer')) {
-    category = 'Street Legal Electric Vehicle';
+    category = 'Street Legal Medium Speed Vehicle';
   }
 
   // We are an independent authorized dealership — we do not manufacture the

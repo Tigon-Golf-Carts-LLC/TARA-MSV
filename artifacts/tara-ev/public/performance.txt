@@ -1,4 +1,4 @@
-# Performance Guidelines — TARA Neighborhood Electric Vehicles
+# Performance Guidelines — TARA Medium Speed Vehicles
 - Mobile-first, responsive layout
 - WebP imagery with lazy loading
 - Static asset caching via CDN-backed hosting (autoscale deployment)

@@ -1,6 +1,6 @@
-# TARA Electric Vehicles
+# TARA Medium Speed Vehicles
 
-Full rebuild (clone) of the client's website taragolfcart.com for TARA Electric Vehicles — all 650 pages with original images and content.
+Full rebuild (clone) of the client's website, rebranded August 2026 from taragolfcart.com (TARA Neighborhood Electric Vehicles) to taramsv.com — TARA Medium Speed Vehicles. All 650 pages with original images; product wording site-wide changed from "golf cart"/"electric vehicle"/NEV to "medium speed vehicle"/MSV (text, titles, alt/meta only — URLs, slugs, and image filenames keep their original golf-cart forms).
 
 ## Run & Operate
 
@@ -52,7 +52,7 @@ The contact page (`/contact/`) now uses a self-hosted inquiry form instead of th
 - Frontend: `artifacts/tara-ev/src/inquiryForm.ts` — renders the form and posts to the API server
 - Backend: `artifacts/api-server/src/routes/inquiries.ts` — validates and delivers via Gmail
 - Email delivery: `artifacts/api-server/src/lib/email.ts` — uses the Gmail Replit connector (`google-mail`)
-- Recipient: `sales@taragolfcart.com`
+- Recipient: `sales@taramsv.com`
 
 ## Gotchas
 

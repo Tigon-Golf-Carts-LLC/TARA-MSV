@@ -47,7 +47,7 @@ const origin =
   getArg('--origin') ??
   (process.env.REPLIT_DOMAINS
     ? `https://${process.env.REPLIT_DOMAINS.split(',')[0].trim()}`
-    : 'https://taranev.com');
+    : 'https://taramsv.com');
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 

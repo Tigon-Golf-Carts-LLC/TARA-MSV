@@ -1,2 +1,2 @@
-# Accessibility Declaration — TARA Neighborhood Electric Vehicles
-https://taranev.com is intended to be fully accessible to all users, assistive technologies, screen readers, and voice assistants. Crawling and indexing by accessibility tools is unrestricted. We aim for WCAG 2.1 AA compliance. Report accessibility issues to info@taranev.com.
+# Accessibility Declaration — TARA Medium Speed Vehicles
+https://taramsv.com is intended to be fully accessible to all users, assistive technologies, screen readers, and voice assistants. Crawling and indexing by accessibility tools is unrestricted. We aim for WCAG 2.1 AA compliance. Report accessibility issues to info@taramsv.com.

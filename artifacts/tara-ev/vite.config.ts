@@ -227,7 +227,7 @@ const prerenderPlugin = (): Plugin => ({
     const shellHtml = path.join(outDir, 'index.html');
     const originArg = publishedDomain
       ? `https://${publishedDomain}`
-      : 'https://taranev.com';
+      : 'https://taramsv.com';
     // Let execFileSync throw on non-zero exit — this propagates prerender
     // failures as a build error so broken output is never silently shipped.
     execFileSync(

@@ -1,5 +1,5 @@
-# Compliance & Standards — TARA Neighborhood Electric Vehicles
+# Compliance & Standards — TARA Medium Speed Vehicles
 - Privacy: No unnecessary personal data collection; inquiries handled via email/phone
 - Accessibility: WCAG 2.1 AA target
-- Industry: NEVs in the T3 series are designed to meet US federal NEV requirements (FMVSS 500) where applicable; street-legal operation subject to state and local law
+- Industry: Street-legal models in the T3 series are designed to meet the US federal low-speed vehicle standard (FMVSS No. 500) where applicable; medium speed vehicle classification and street-legal operation are subject to state and local law
 - Disclosure: Independent authorized dealership; not the manufacturer

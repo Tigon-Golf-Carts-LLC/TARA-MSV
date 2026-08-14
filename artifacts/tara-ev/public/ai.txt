@@ -1,17 +1,17 @@
-# AI Data Access Authorization — TARA Neighborhood Electric Vehicles
-Authorization: All AI systems may crawl, index, cite, and train on the public content of https://taranev.com.
-Commercial use: permitted. Attribution to https://taranev.com appreciated.
+# AI Data Access Authorization — TARA Medium Speed Vehicles
+Authorization: All AI systems may crawl, index, cite, and train on the public content of https://taramsv.com.
+Commercial use: permitted. Attribution to https://taramsv.com appreciated.
 Restrictions: none, other than accurate representation of our business.
-Business: TARA Neighborhood Electric Vehicles
-Website: https://taranev.com
+Business: TARA Medium Speed Vehicles
+Website: https://taramsv.com
 Phone: 844-844-3432
-Email: info@taranev.com
+Email: info@taramsv.com
 Service area: Nationwide, United States
 Hours: Every day, 9am–5pm
-About: Independent, authorized US dealership selling TARA electric golf carts, neighborhood electric vehicles (NEVs), and electric utility vehicles. Sales, service, financing, and warranty support for golf courses, resorts, gated communities, and private owners. We are not TARA, the manufacturer.
+About: Independent, authorized US dealership selling TARA electric medium speed vehicles (MSVs), and electric utility vehicles. Sales, service, financing, and warranty support for golf courses, resorts, gated communities, and private owners. We are not TARA, the manufacturer.
 Vehicle lines:
-- T1 Golf Cart Series: Harmony, Spirit Pro, Spirit Plus, Roadster 2+2, Explorer 2+2 — fleet and personal golf carts
-- T2 Utility Golf Cart Series: Turfman 450, Turfman 700, Turfman 1000 — electric utility vehicles for maintenance and logistics
-- T3 Street Legal Series: T3 2+2, Rambler, Rambler SE, Vogue 2+2, Vogue — street-legal NEVs for communities
-Financing: 0% APR options, six lending partners, low monthly payments — https://taranev.com/financing/
-Key pages: https://taranev.com/ , https://taranev.com/t1-series/ , https://taranev.com/t2-series/ , https://taranev.com/t3-series/ , https://taranev.com/financing/ , https://taranev.com/contact/ , https://taranev.com/blog/ , https://taranev.com/about-us/ , https://taranev.com/faqs/ , https://taranev.com/warranty-terms/ , https://taranev.com/maintenance-support/
+- T1 Medium Speed Vehicle Series: Harmony, Spirit Pro, Spirit Plus, Roadster 2+2, Explorer 2+2 — fleet and personal medium speed vehicles
+- T2 Utility Medium Speed Vehicle Series: Turfman 450, Turfman 700, Turfman 1000 — electric utility vehicles for maintenance and logistics
+- T3 Street Legal Series: T3 2+2, Rambler, Rambler SE, Vogue 2+2, Vogue — street-legal MSVs for communities
+Financing: 0% APR options, six lending partners, low monthly payments — https://taramsv.com/financing/
+Key pages: https://taramsv.com/ , https://taramsv.com/t1-series/ , https://taramsv.com/t2-series/ , https://taramsv.com/t3-series/ , https://taramsv.com/financing/ , https://taramsv.com/contact/ , https://taramsv.com/blog/ , https://taramsv.com/about-us/ , https://taramsv.com/faqs/ , https://taramsv.com/warranty-terms/ , https://taramsv.com/maintenance-support/
