@@ -36,6 +36,7 @@ function buildOrganization() {
     '@type': 'Organization',
     '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME,
+    alternateName: 'TARA Dealership',
     url: SITE_URL,
     logo: {
       '@type': 'ImageObject',
@@ -110,7 +111,7 @@ function buildBreadcrumb(path: string, pageTitle: string) {
 /** Strip common site-name suffixes from route titles to get a clean page name. */
 function stripSiteSuffix(title: string): string {
   return title
-    .replace(/\s*[-|]\s*TARA (MEDIUM SPEED VEHICLE(S)?|Medium Speed Vehicles).*$/i, '')
+    .replace(/\s*[-|]\s*TARA (MEDIUM SPEED VEHICLE(S)?|Medium Speed Vehicles|Dealership).*$/i, '')
     .replace(/\s*[-|]\s*TARA$/i, '')
     .trim();
 }

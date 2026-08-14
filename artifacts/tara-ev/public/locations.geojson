@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -98.5795,
+          39.8283
+        ]
+      },
+      "properties": {
+        "name": "TARA Dealership \u2014 TARA Medium Speed Vehicles",
+        "serviceArea": "United States (nationwide)",
+        "phone": "844-844-3432",
+        "email": "info@taramsv.com",
+        "website": "https://taramsv.com",
+        "coordinates": {
+          "lat": 39.8283,
+          "lng": -98.5795,
+          "note": "Geographic center of the contiguous US \u2014 nationwide service area, not a storefront"
+        }
+      }
+    }
+  ]
+}

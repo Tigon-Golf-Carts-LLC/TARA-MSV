@@ -180,8 +180,8 @@ export default function App() {
             <div class="tf-inner">
               <div class="tf-col tf-brand">
                 <img src="${BASE}images/tara-nev-logo.png" alt="TARA Medium Speed Vehicles" />
-                <p>TARA Medium Speed Vehicles — sales, service, and support for electric medium speed vehicles, MSVs, and utility vehicles.</p>
-                <p class="tf-disclaimer">We are an independent, authorized dealership selling TARA vehicles. We are not TARA, the manufacturer.</p>
+                <p>TARA Medium Speed Vehicles — your authorized TARA Dealership for sales, service, and support of electric medium speed vehicles, MSVs, and utility vehicles.</p>
+                <p class="tf-disclaimer">We are an independent, authorized TARA Dealership selling TARA vehicles. We are not TARA, the manufacturer.</p>
                 <a class="tf-phone" href="tel:8448443432">&#9742; 844-844-3432</a>
               </div>
               <div class="tf-col">

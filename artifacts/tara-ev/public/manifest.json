@@ -1,16 +1,21 @@
 {
-  "name": "TARA Neighborhood Electric Vehicles",
-  "short_name": "TARA NEV",
+  "name": "TARA Medium Speed Vehicles \u2014 TARA Dealership",
+  "short_name": "TARA MSV",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#101210",
   "theme_color": "#101210",
-  "description": "US dealership for TARA electric golf carts, NEVs, and utility vehicles.",
+  "description": "Authorized US TARA Dealership for electric medium speed vehicles and utility vehicles.",
   "icons": [
     {
       "src": "/favicon.ico",
       "sizes": "48x48",
       "type": "image/x-icon"
+    },
+    {
+      "src": "/images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
     }
   ]
 }

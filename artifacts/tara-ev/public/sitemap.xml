@@ -2,14 +2,78 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>https://taramsv.com/sitemap-pages.xml</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-08-14</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://taramsv.com/sitemap-news.xml</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-08-14</lastmod>
   </sitemap>
   <sitemap>
     <loc>https://taramsv.com/sitemap-images.xml</loc>
-    <lastmod>2026-08-13</lastmod>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/page-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/post-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/sitemap-blog.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/sitemap-brands.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/category-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/tag-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/author-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/mobile-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/dynamic-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/hreflang-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/xhtml-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/geo-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/news-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/image-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/events-sitemap.xml</loc>
+    <lastmod>2026-08-14</lastmod>
+  </sitemap>
+  <sitemap>
+    <loc>https://taramsv.com/urllist.xml</loc>
+    <lastmod>2026-08-14</lastmod>
   </sitemap>
 </sitemapindex>

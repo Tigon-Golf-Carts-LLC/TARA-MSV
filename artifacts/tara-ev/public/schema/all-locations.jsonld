@@ -1,0 +1,16 @@
+{
+  "@context": "https://schema.org",
+  "@type": "AutoDealer",
+  "name": "TARA Medium Speed Vehicles",
+  "alternateName": "TARA Dealership",
+  "url": "https://taramsv.com",
+  "logo": "https://taramsv.com/images/tara-nev-logo.png",
+  "image": "https://taramsv.com/images/og-image.png",
+  "telephone": "+1-844-844-3432",
+  "email": "info@taramsv.com",
+  "areaServed": {
+    "@type": "Country",
+    "name": "United States"
+  },
+  "description": "Independent, authorized US TARA Dealership for electric medium speed vehicles (MSVs) and utility vehicles. Sales, service, financing, and warranty support nationwide."
+}

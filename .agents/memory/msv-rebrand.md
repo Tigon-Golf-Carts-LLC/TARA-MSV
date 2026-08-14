@@ -16,3 +16,7 @@ Rules:
 
 **Why:** a blind find/replace on hyphenated or filename forms breaks routing/assets, and blanket replacement of "golf cart" mangles golf-equipment terms (disc golf, push trolleys, cart bags) into nonsense; the space-form replacement is safe only for the vehicle-product sense.
 **How to apply:** after any merge or content regeneration, re-grep for `taragolfcart|taranev|Neighborhood Electric` and re-apply text-only replacement; for `golf cart` matches, check context against the retained-terms list above before replacing.
+
+## TARA Dealership SEO pass (Aug 2026)
+- Site-wide keyword is "TARA Dealership": routes.json titles suffixed "| TARA Dealership", descriptions mention dealership, footer + JSON-LD alternateName carry it. structuredData.ts stripSiteSuffix regex must keep stripping "| TARA Dealership" or product names in JSON-LD get polluted.
+- public/ holds a generated SEO/AI file suite (many sitemaps, rss/atom, product feeds, locations.*, schema/*.jsonld). Rule: no unverified merchant claims in feeds/schema — no stock status, store codes, hours, or price ranges; the US-center coordinate is labelled "not a storefront".

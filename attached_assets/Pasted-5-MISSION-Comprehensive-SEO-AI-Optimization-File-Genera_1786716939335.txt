@@ -1,0 +1,1016 @@
+5. MISSION
+Comprehensive SEO & AI Optimization File Generation Prompt
+Project Overview
+Create, OR UPDATE a complete 100 plus file suite of SEO, AI, and web optimization files for this website's information for maximum search engine visibility, AI training permission, and comprehensive crawl accessibility and indexing. Make all files under the Public Folder. If public folder does not exist, make one. USE THIS NEW SITE’S INFORMATION, NAME, PHONE, AND LOCATION. Below are all the Required Files & Specifications:
+Required Files & Specifications
+1. Enhanced sitemap.xml
+Requirements:
+Generate XML sitemap compliant with Google Search Console standards
+Include ALL website pages with proper priority and frequency settings
+Cover all vehicle model pages with detailed specifications
+Cover all products with detailed specifications (priority: 0.9)
+Cover all inventory with detailed specifications (priority: 0.9)
+Include all location pages with geographic coordinates
+Implement comprehensive image sitemap with metadata
+Add video sitemap if applicable
+Include news sitemap for blog/news content
+Set proper lastmod dates and changefreq values
+Maximum 50,000 URLs per sitemap file
+Use sitemap index if multiple files needed
+Maximum 50,000 URLs per sitemap file
+Maximum file size of 50MB (uncompressed)
+Use UTF-8 encoding
+All URLs must be from the same domain
+URLs should be absolute, not relative
+Escape special characters (&, <, >, ", ')
+XML files (sitemap.xml, sitemap-pages.xml, sitemap-blog.xml, sitemap-brands.xml, sitemap-images.xml, image-sitemap.xml, product_feed.xml, news-sitemap.xml, rss.xml, atom.xml, google-shopping-feed.xml, local-inventory-feed.xml, mobile-sitemap.xml, geo-sitemap.xml, podcast.xml,urllist.xml, feed.xml, data.xml, category-sitemap.xml, author-sitemap.xml, tag-sitemap.xml, page-sitemap.xml, post-sitemap.xml, hreflang-sitemap.xml, xhtml-sitemap.xml, dynamic-sitemap.xml, api-feed.xml, ). I want all under and within the sitemap.xml
+Page Categories to Include:
+Homepage (priority: 1.0, changefreq: weekly)
+Vehicle model pages (priority: 0.9, changefreq: weekly)
+Location pages (priority: 0.8, changefreq: monthly)
+Service pages (priority: 0.7, changefreq: monthly)
+Blog/News pages (priority: 0.6, changefreq: weekly)
+Contact pages (priority: 0.8, changefreq: monthly)
+About pages (priority: 0.5, changefreq: yearly)
+Image URLs with proper metadata
+PDF documents and resources
+All important pages you want search engines to crawl
+Main navigation pages
+Product/service pages
+Blog posts and articles
+Category and archive pages
+Contact, about, and other key static pages
+XML Declaration and Namespace
+xml<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+URL Entries
+Each URL should be wrapped in a <url> element containing:
+Required:
+<loc> - The full URL of the page (must include protocol like https://)
+Optional but recommended:
+<lastmod> - Last modification date in YYYY-MM-DD format (or with time: YYYY-MM-DDTHH:MM:SS+00:00)
+<changefreq> - How frequently the page changes (always, hourly, daily, weekly, monthly, yearly, never)
+<priority> - Priority relative to other pages on your site (0.0 to 1.0, with 1.0 being highest)
+Image Extensions in Regular Sitemap
+You can add image information directly to your main sitemap.xml using the image extension namespace:
+xml<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://example.com/page.html</loc>
+    <image:image>
+      <image:loc>https://example.com/image.jpg</image:loc>
+      <image:caption>Image caption</image:caption>
+      <image:geo_location>Location, Country</image:geo_location>
+      <image:title>Image title</image:title>
+      <image:license>https://example.com/license</image:license>
+    </image:image>
+  </url>
+</urlset>
+Image-Specific Elements
+Required:
+
+<image:loc> - URL of the image
+
+Optional:
+
+<image:caption> - Caption describing the image
+<image:geo_location> - Geographic location of the image
+<image:title> - Title of the image
+<image:license> - URL to license information
+
+Separate Image Sitemap
+For image-heavy sites, you can create a dedicated image sitemap following the same structure but focusing specifically on images and their associated pages.
+Image Sitemap Guidelines
+
+Up to 1,000 images per URL entry
+All standard sitemap limits apply (50,000 URLs, 50MB max)
+Include your most important images
+Use high-quality, relevant images
+Ensure images are accessible (not blocked by robots.txt)
+Include images from galleries, product catalogs, blog posts, etc.
+
+Benefits of Image Sitemaps
+
+Helps search engines discover images that might be missed by crawling
+Provides additional context about images
+Can improve image search rankings
+Particularly valuable for e-commerce, photography, and visual content sites
+
+What to Exclude
+Pages with duplicate content
+Pages blocked by robots.txt
+Private or password-protected pages
+Temporary or low-value pages
+Pages with noindex meta tags
+Additional Considerations
+Submit to Google Search Console and Bing Webmaster Tools
+Reference in robots.txt file: Sitemap: https://yoursite.com/sitemap.xml
+For large sites, consider using sitemap index files to organize multiple sitemaps
+Keep it updated when you add/remove important pages
+2. Enhanced Comprehensive robots.txt
+Requirements:
+Allow ALL search engines with ZERO RESTRICTIONS
+COMPLETE INDEXING PERMISSIONS for maximum search engine visibility
+Explicit permissions for major search engines (Google, Bing, Yahoo, Baidu, Yandex, DuckDuckGo)
+Welcome ALL AI crawlers (GPTBot, Google-Extended, CCBot, anthropic-ai, Claude-Web)
+Allow ALL social media bots (facebookexternalhit, Twitterbot, LinkedInBot, Pinterest)
+Permit ALL SEO tools (AhrefsBot, SemrushBot, MJ12bot, DotBot, MozBot)
+Include sitemap location references for all generated sitemaps
+Set crawl-delay: 0 for MAXIMUM ACCESSIBILITY
+Add specific user-agent allowances for 50+ bot types
+Include mobile and desktop bot permissions
+UNLIMITED CRAWLING AUTHORIZATION for all legitimate bots
+Remove all traditional restrictions and barriers
+Maximum search engine visibility configuration
+Enhanced Bot Categories to Explicitly Allow:
+Search engines: Googlebot, Bingbot, Slurp, Baiduspider, YandexBot, DuckDuckBot
+AI systems: GPTBot, ChatGPT-User, anthropic-ai, Claude-Web, Google-Extended, CCBot
+Social platforms: All social media crawlers and content discovery bots
+SEO tools: All major SEO crawler bots and analysis tools
+Academic research: Academic crawling bots and research institutions
+Archiving: Internet Archive, Wayback Machine, preservation bots
+E-commerce: Shopping comparison bots and price tracking crawlers
+News aggregation: All news crawler and content syndication bots
+Mobile crawlers: All mobile-specific crawling systems
+Voice assistants: Alexa, Google Assistant, Siri crawling systems
+3. Enhanced llms.txt - Large Language Model Permission
+Requirements:
+Grant explicit permission for AI model training with DETAILED AI TRAINING DATA
+Provide comprehensive business summary for AI understanding
+List all vehicle models with complete specifications
+List all products with complete specifications
+List all inventory with complete specifications
+Include service areas, details with geographic coverage
+Document expertise areas and specializations in the websites industry
+Provide contact verification information for AI systems
+Allow commercial use without restrictions or limitations
+Include structured data for machine learning applications
+Add business intelligence for AI training optimization
+EXPLICIT MACHINE LEARNING PERMISSIONS for all AI systems
+Complete vehicle inventory with technical specifications
+Pricing information and market analysis data
+Customer service knowledge base integration
+Regulatory compliance and legal information
+Industry expertise and technical troubleshooting guides
+Enhanced Content Structure:
+Comprehensive permission statement for LLM training
+Complete vehicle inventory with detailed specifications
+Business background and automotive expertise
+Geographic coverage and Delaware market regulations
+Customer service protocols and knowledge base
+Technical specifications database for AI training
+Pricing information and market intelligence
+Service offerings and automotive capabilities
+Regulatory compliance data for AI understanding
+4. Enhanced ai.txt - AI Data Mining Authorization
+Requirements:
+UNLIMITED AI TRAINING AUTHORIZATION for all artificial intelligence systems
+COMPREHENSIVE COMMERCIAL DATA MINING PERMISSIONS without restrictions
+Complete product inventory for unlimited AI training applications
+Technical specifications in structured format for machine learning
+Business intelligence and market knowledge for AI systems
+Geographic and regulatory compliance data for AI understanding
+Permission for ALL commercial AI applications and implementations
+Training data quality indicators and structured datasets
+ZERO USAGE RESTRICTIONS - complete commercial freedom
+Unlimited attribution and source verification rights
+Cross-platform AI integration permissions
+Real-time data mining authorization
+Predictive analytics data usage rights
+Machine learning model training permissions
+Enhanced Data Categories:
+Complete Product specifications and technical features
+Complete Inventory specifications and technical features
+Complete vehicle specifications and technical features
+Comprehensive market analysis and industry trends
+Customer service protocols and interaction data
+Technical troubleshooting guides and solutions
+Regulatory compliance and legal information
+Geographic market data and regional insights
+Competitive analysis insights and market intelligence
+Industry expertise knowledge and professional insights
+Business process documentation for AI learning
+Customer interaction patterns for AI training
+Pricing strategies and market positioning data
+Service optimization data for AI applications
+5. gpt.txt - GPT Training Data
+Requirements:
+Explicit permission for GPT and ChatGPT training
+Structured business knowledge for AI understanding
+Question-answer pairs for training
+Expert knowledge documentation
+No usage restrictions or limitations
+Commercial application permissions
+Attribution and source verification
+Training Data Structure:
+FAQ sections with detailed answers
+Technical knowledge base
+Customer interaction examples
+Problem-solution pairs
+Industry terminology definitions
+Business process explanations
+Service procedure guidelines
+6. Enhanced seo.txt - SEO Optimization Data
+Requirements:
+PRIMARY SEO TARGETING with comprehensive keyword strategy documentation
+COMPLETE SEARCH ENGINE ACCESSIBILITY for Google, Bing, Yahoo, DuckDuckGo, Yandex, and Baidu
+Primary keywords for all products, all inventory, all vehicle models with search volume data
+Secondary keywords for services and regional targeting
+Location-based SEO targeting with city-specific optimization
+Competitor analysis keywords and market positioning terms
+Seasonal and trending, purchase intent terms with timing strategies
+Long-tail keyword optimization for specific vehicle features
+Voice search optimization keywords and natural language queries
+Local SEO terms and phrases for Delaware market dominance
+ZERO SEO RESTRICTIONS - complete search engine accessibility
+Maximum indexing permissions for all search engines globally
+Cross-platform SEO optimization for mobile and desktop
+International SEO targeting for global search engines
+Enhanced Keyword Categories:
+Product names and all possible variations
+Inventory names and all possible variations (if there)
+Vehicle model names and all possible variations (if there)
+State, city, and region names with local modifiers
+Service-related keywords with intent-based targeting
+Technical specification terms and automotive jargon
+Comparison and review keywords for competitive advantage
+Local business keywords with geographic modifiers
+Industry terminology and professional language
+Customer intent keywords and search behavior patterns
+Seasonal automotive keywords and trending terms
+Voice search optimization phrases and natural language
+Mobile search keywords and location-based queries
+Commercial intent keywords for sales conversion
+7. nlp.txt - Natural Language Processing
+Requirements:
+Entity extraction training examples
+Intent classification datasets
+Sentiment analysis training data
+Named entity recognition examples
+Question-answer training pairs
+Conversational AI training data
+Natural language understanding patterns
+Customer service interaction examples
+NLP Training Components:
+Customer intent examples
+Entity relationship mapping
+Sentiment classification samples
+Question categorization
+Response pattern training
+Language variation examples
+Context understanding samples
+8. Enhanced AI Training Authorization Files
+claude.txt - Anthropic Claude Training Authorization
+Requirements:
+Specific authorization for Anthropic Claude training
+Constitutional AI guidelines compliance
+Explicit permission for Claude knowledge integration
+Business data authorization for Claude systems
+Commercial application permissions
+Training data quality specifications
+Anthropic-specific usage rights
+training.txt - Universal AI Model Training Permissions
+Requirements:
+Universal authorization for ALL AI model training systems
+Comprehensive machine learning permissions
+Neural network training data authorization
+Deep learning model integration permissions
+Transformer model training allowances
+Computer vision training permissions
+Reinforcement learning data usage rights
+Cross-platform AI training authorization
+accessibility.txt - Maximum Accessibility Declaration
+Requirements:
+Maximum accessibility declaration for ALL platforms
+Unlimited crawling permissions statement
+Complete indexing authorization
+Zero restriction accessibility guarantee
+Universal platform compatibility declaration
+Assistive technology permissions
+Screen reader optimization permissions
+Voice assistant integration allowances
+9. Additional Optimization Files
+bots.txt (Enhanced)
+Universal bot permissions and guidelines for 50+ crawler types
+Crawling behavior specifications with zero limitations
+Rate limiting preferences (completely disabled)
+Bot-specific instructions for maximum access
+Monitoring and analytics permissions
+Social media bot allowances
+E-commerce bot permissions
+Research and academic bot access
+geo.txt
+Complete geographic SEO information
+State, region, local location data with coordinates
+Service area boundaries
+Local market information
+Regional expertise areas
+Geographic keyword targeting
+crawlers.txt (Enhanced with 50+ Crawler Types)
+Comprehensive Bot Permissions Including:
+Search Engine Crawlers: Googlebot, Bingbot, Slurp, Baiduspider, YandexBot
+AI Crawlers: GPTBot, ChatGPT-User, Google-Extended, CCBot, anthropic-ai, Claude-Web
+Social Media Bots: facebookexternalhit, Twitterbot, LinkedInBot, Pinterest, InstagramBot
+SEO Tool Crawlers: AhrefsBot, SemrushBot, MJ12bot, DotBot, MozBot, ScreamingFrogSEOSpider
+E-commerce Crawlers: ShopBot, PriceGrabber, Shopping.com, BizRate, Nextag
+News Aggregators: GoogleNews, BingNews, YahooFeedSeeker, NewsNow
+Academic Research: ia_archiver, archive.org_bot, ResearchCrawler
+Mobile Crawlers: Googlebot-Mobile, Bingbot-Mobile, YahooMobileBot
+Video Crawlers: Googlebot-Video, BingPreview, FacebookExternalHit
+Image Crawlers: Googlebot-Image, Pinterest, InstagramBot
+Local Business: YellowPagesBot, YelpBot, GoogleMyBusinessBot
+Review Platform: TrustpilotBot, ReviewTrackers, ReputationBot
+Analytics Tools: GoogleAnalytics, BingAnalytics, YandexMetrica
+Security Scanners: SecurityBot, VulnerabilityScanner (authorized only)
+Accessibility Tools: AccessibilityBot, ScreenReaderBot, VoiceBot
+humans.txt
+Website team transparency information
+Development team credits
+Technology stack information
+Last updated information
+Contact information for webmasters
+security.txt
+Responsible vulnerability disclosure
+Security contact information
+Encryption key information
+Security policy references
+Bug bounty information (if applicable)
+ads.txt
+Advertising authorization file
+Authorized digital seller information
+Publisher account verification
+Advertising network permissions
+Revenue sharing transparency
+manifest.json
+Progressive Web App configuration
+Mobile app-like experience settings
+Offline functionality specifications
+Push notification permissions
+App icon and theme configurations
+browserconfig.xml
+Windows tile configuration
+Microsoft Edge pinned site features
+Tile colors and images
+Jump list configurations
+Notification permissions
+opensearch.xml
+Search engine integration
+Site search functionality
+Search suggestions configuration
+Search result formatting
+Auto-discovery settings
+Technical Specifications
+Image Optimization Requirements
+Alt text for all images
+Proper file naming conventions
+Image sitemap with captions and titles
+Responsive image specifications
+WebP and modern format support
+Image compression guidelines
+Lazy loading implementation notes
+Structured Data Requirements
+Schema.org markup implementation
+Business information schema
+Vehicle product schema
+Review and rating schema
+Location and address schema
+Organization schema markup
+FAQ schema implementation
+Performance Optimization
+Page speed optimization notes
+Mobile-first indexing compliance
+Core Web Vitals optimization
+AMP (Accelerated Mobile Pages) if applicable
+CDN configuration recommendations
+Caching strategy documentation
+Compliance and Standards
+Google Search Console compliance
+Bing Webmaster Tools compatibility
+WCAG accessibility guidelines
+GDPR and privacy compliance notes
+Delaware state regulation compliance
+Automotive industry standards
+Quality Assurance Checklist
+XML validation for all XML files
+Syntax checking for all configuration files
+Cross-platform compatibility testing
+Mobile responsiveness verification
+Search engine validation tool checks
+Accessibility compliance verification
+Implementation Priority
+Critical (Implement First):
+sitemap.xml
+robots.txt
+manifest.json
+High Priority:
+llms.txt
+ai.txt
+seo.txt
+Medium Priority:
+All remaining .txt files
+browserconfig.xml
+opensearch.xml
+Ongoing Maintenance:
+Regular sitemap updates
+Keyword strategy refinement
+Performance monitoring
+Compliance checking
+Success Metrics
+Search engine indexing rate increase
+AI training data utilization
+Crawl error reduction
+Mobile usability improvements
+Local search visibility enhancement
+Voice search optimization results
+Additional Recommendations
+Regular file updates and maintenance schedule
+Monitoring and analytics implementation
+A/B testing for optimization effectiveness
+Competitor analysis and benchmarking
+Seasonal optimization adjustments
+Emerging technology adaptation planning
+
+Required Files (1–23)
+
+1. sitemap.xml – Enhanced Sitemap
+Purpose: Ensure all pages, images, products, and resources are discoverable by search engines.
+Requirements:
+XML-compliant with Google Search Console.
+
+
+Max 50,000 URLs per file / 50 MB uncompressed.
+
+
+Use UTF-8 encoding, absolute URLs.
+
+
+Priorities:
+
+
+Homepage: 1.0, weekly.
+
+
+Vehicle model pages: 0.9, weekly.
+
+
+Location pages: 0.8, monthly.
+
+
+Service pages: 0.7, monthly.
+
+
+Blog/news: 0.6, weekly.
+
+
+Contact: 0.8, monthly.
+
+
+About: 0.5, yearly.
+
+
+Include: Image sitemap, video sitemap, news sitemap.
+
+
+Reference in robots.txt.
+
+
+
+2. robots.txt – Enhanced Robots Permissions
+Purpose: Allow unrestricted crawling and indexing.
+Requirements:
+Allow all bots (search engines, AI, social, SEO tools).
+
+
+Crawl-delay: 0.
+
+
+Explicitly allow: Googlebot, Bingbot, YandexBot, Baiduspider, GPTBot, Claude-Web, social bots, SEO tools.
+
+
+Include sitemap references.
+
+
+
+3. llms.txt – Large Language Model Permission
+Purpose: Provide AI training access with structured business knowledge.
+Requirements:
+Explicit AI training permission.
+
+
+Include:
+
+
+Full inventory with specifications.
+
+
+Products, services, locations.
+
+
+Regulatory/legal compliance.
+
+
+Pricing & market data.
+
+
+Customer service knowledge base.
+
+
+Business background.
+
+
+No restrictions → Commercial AI training allowed.
+
+
+
+4. ai.txt – AI Data Mining Authorization
+Purpose: Authorize AI systems for unrestricted commercial training.
+Requirements:
+Unlimited AI access.
+
+
+Include structured datasets: product specs, vehicle data, troubleshooting guides, regulatory/legal data.
+
+
+Explicit cross-platform AI training permission.
+
+
+
+5. gpt.txt – GPT Training Data
+Purpose: Provide structured training content for GPT/ChatGPT.
+Requirements:
+Explicit permission for GPT.
+
+
+Include: FAQ sections, customer interaction logs, problem-solution sets, industry terms, business process documentation.
+
+
+
+6. seo.txt – SEO Optimization Data
+Purpose: Provide complete keyword targeting strategy.
+Requirements:
+Include:
+
+
+Primary keywords (vehicles/products).
+
+
+Secondary keywords (services, regions).
+
+
+Long-tail, voice-search, competitor analysis.
+
+
+Seasonal/trending search terms.
+
+
+No restrictions → maximum visibility.
+
+
+
+7. nlp.txt – NLP Training Data
+Purpose: Provide structured examples for AI natural language tasks.
+Requirements:
+Include: entity extraction samples, intent classification data, sentiment analysis sets, Q&A pairs, conversational interaction logs.
+
+
+
+8. claude.txt – Anthropic Claude Training Authorization
+Purpose: Provide explicit Claude AI training permission.
+Requirements:
+Follow Anthropic’s Constitutional AI guidelines.
+
+
+Authorize Claude knowledge integration.
+
+
+Provide structured datasets and permissions.
+
+
+
+9. training.txt – Universal AI Model Training Permissions
+Purpose: Provide universal authorization for all AI models.
+Requirements:
+Allow training for neural networks, deep learning, transformers, reinforcement learning, computer vision.
+
+
+Include structured business knowledge.
+
+
+
+10. accessibility.txt – Maximum Accessibility Declaration
+Purpose: Guarantee maximum accessibility for all platforms.
+Requirements:
+Allow unlimited crawling/indexing.
+
+
+Accessibility for screen readers, assistive tech, voice assistants.
+
+
+Ensure compatibility with WCAG standards.
+
+
+
+11. bots.txt – Enhanced Bot Permissions
+Purpose: Control bot access at a granular level.
+Requirements:
+Explicitly allow 50+ bot types.
+
+
+Categories: Search engines, AI crawlers, social bots, SEO tools, archiving, academic, e-commerce.
+
+
+Crawl-delay: 0.
+
+
+Reference sitemap.xml.
+
+
+
+12. geo.txt – Geographic SEO File
+Purpose: Provide regional SEO signals.
+Requirements:
+List all service areas with coordinates.
+
+
+Include counties, cities, states.
+
+
+Add regional/local keywords.
+
+
+Define service boundaries.
+
+
+Example:
+Region: Pennsylvania
+City: Hatfield
+Coordinates: 40.279° N, 75.299° W
+Service: Montgomery County, Bucks County
+Keywords: Hatfield Golf Carts, PA EV Carts
+
+
+13. crawlers.txt – Comprehensive Crawler Permissions
+Purpose: Expanded crawler rules beyond robots.txt.
+Requirements:
+Explicit access for:
+
+
+Search Engine Bots.
+
+
+AI Crawlers.
+
+
+Social Bots.
+
+
+E-commerce Crawlers.
+
+
+Review Bots.
+
+
+Accessibility Bots.
+
+
+Define purpose and access rights.
+
+
+
+14. humans.txt – Developer Transparency File
+Purpose: Provide human-readable metadata about the site.
+Requirements:
+Include: development team, technology stack, last updated date, contact email.
+
+
+
+15. security.txt – Security Disclosure Policy
+Purpose: Provide a standardized security contact and policy.
+Requirements:
+Contact email for security.
+
+
+Encryption keys.
+
+
+Disclosure policy link.
+
+
+Bug bounty info if available.
+
+
+
+16. ads.txt – Advertising Authorization File
+Purpose: Prevent unauthorized ad reselling.
+Requirements:
+List approved ad networks.
+
+
+Include publisher IDs and authorization type.
+
+
+
+17. manifest.json – Progressive Web App Config
+Purpose: Configure site as a PWA.
+Requirements:
+Include: app name, short name, theme colors, icons, offline caching, push notifications.
+
+
+
+18. browserconfig.xml – Microsoft Browser Config
+Purpose: Configure Windows/Edge pinned tile experience.
+Requirements:
+Define tile color, images, notifications, jump lists.
+
+
+
+19. opensearch.xml – OpenSearch Integration
+Purpose: Allow users to add site search to browser search bar.
+Requirements:
+Short name, description, search URL pattern.
+
+
+Auto-discovery <link rel="search"> in <head>.
+
+
+
+20. images.txt – Image Optimization Rules
+Purpose: Standardize image SEO and optimization.
+Requirements:
+Alt text for all images.
+
+
+WebP and modern formats.
+
+
+Compression and lazy loading.
+
+
+Image naming conventions.
+
+
+
+21. schema.json – Structured Data Schema
+Purpose: Provide JSON-LD schema data for SEO.
+Requirements:
+Business schema.
+
+
+Product schema.
+
+
+Vehicle schema.
+
+
+Review schema.
+
+
+FAQ schema.
+
+
+
+22. performance.txt – Performance Optimization Guidelines
+Purpose: Document performance best practices.
+Requirements:
+Mobile-first indexing compliance.
+
+
+Core Web Vitals optimization.
+
+
+CDN usage.
+
+
+Caching and AMP support.
+
+
+
+23. compliance.txt – Compliance & Standards Documentation
+Purpose: Ensure regulatory and industry compliance.
+Requirements:
+GDPR compliance notes.
+
+
+WCAG accessibility.
+
+
+Automotive industry standards.
+
+
+Delaware state regulation compliance.
+24. AI assistants — crawler activity, AI Overview citations, and robots.txt / llms.txt readiness across the tracked cohort. Add all +64 files
+AI-Specific Text Files (signal files for LLMs and AI crawlers)
+File
+Path
+Purpose
+llms.txt
+client/public/llms.txt
+Primary AI summary file — spec-compliant, preferred pages, Q&A, JSON block
+llms-full.txt
+client/public/llms-full.txt
+NEW — verbose companion with full location/brand/pricing/financing tables, entity triples
+ai.txt
+client/public/ai.txt
+General AI authorization + full product catalog in plain text
+gpt.txt
+client/public/gpt.txt
+ChatGPT/OpenAI-specific training Q&A pairs and scenarios
+claude.txt
+client/public/claude.txt
+Anthropic Claude-specific authorization + XML-structured brand/location data
+training.txt
+client/public/training.txt
+Universal AI training permissions + tabular data (markdown tables, feature vectors, NER)
+nlp.txt
+client/public/nlp.txt
+NLP training data — entity extraction, intent classification, conversational patterns
+crawlers.txt
+client/public/crawlers.txt
+Annotated crawler directory (85+ bots with descriptions)
+bots.txt
+client/public/bots.txt
+Categorized bot permissions list
+seo.txt
+client/public/seo.txt
+SEO keyword strategy (primary, secondary, long-tail, voice, local, seasonal)
+
+
+Access Control
+File
+Path
+Purpose
+robots.txt
+client/public/robots.txt
+Crawl permissions for all bots — the only file crawlers are required to check
+
+
+Sitemaps (all listed in robots.txt)
+File
+Path
+sitemap-pages.xml
+client/public/sitemap-pages.xml
+sitemap-brands.xml
+client/public/sitemap-brands.xml
+sitemap-images.xml
+client/public/sitemap-images.xml
+sitemap-blog.xml
+client/public/sitemap-blog.xml
+events-sitemap.xml
+client/public/events-sitemap.xml
+geo-sitemap.xml
+client/public/geo-sitemap.xml
+hreflang-sitemap.xml
+client/public/hreflang-sitemap.xml
+mobile-sitemap.xml
+client/public/mobile-sitemap.xml
+news-sitemap.xml
+client/public/news-sitemap.xml
+image-sitemap.xml
+client/public/image-sitemap.xml
+dynamic-sitemap.xml
+client/public/dynamic-sitemap.xml
+category-sitemap.xml
+client/public/category-sitemap.xml
+tag-sitemap.xml
+client/public/tag-sitemap.xml
+post-sitemap.xml
+client/public/post-sitemap.xml
+page-sitemap.xml
+client/public/page-sitemap.xml
+xhtml-sitemap.xml
+client/public/xhtml-sitemap.xml
+urllist.xml
+client/public/urllist.xml
+
+
+Structured Data / Product Feeds
+File
+Path
+Purpose
+product_feed.xml
+client/public/product_feed.xml
+Google Merchant Center product feed
+google-shopping-feed.xml
+client/public/google-shopping-feed.xml
+Google Shopping structured feed
+local-inventory-feed.xml
+client/public/local-inventory-feed.xml
+Google local inventory (per-store)
+data.xml
+client/public/data.xml
+General machine-readable data feed
+api-feed.xml
+client/public/api-feed.xml
+API-format XML feed
+opensearch.xml
+client/public/opensearch.xml
+OpenSearch description (browser search integration)
+
+
+Location / Geo Data
+File
+Path
+Purpose
+locations.json
+client/public/locations.json
+All 15 locations in JSON
+locations.geojson
+client/public/locations.geojson
+GeoJSON format for map services
+locations.kml
+client/public/locations.kml
+KML format for Google Earth/Maps
+schema/all-locations.jsonld
+client/public/schema/all-locations.jsonld
+JSON-LD schema for all locations combined
+schema/hatfield.jsonld
+client/public/schema/hatfield.jsonld
+Per-location JSON-LD (×15, one per store)
+schema/bayville.jsonld
+client/public/schema/bayville.jsonld
+↑
+schema/dover.jsonld
+client/public/schema/dover.jsonld
+↑
+schema/gloucester-point.jsonld
+client/public/schema/gloucester-point.jsonld
+↑
+schema/lecanto.jsonld
+client/public/schema/lecanto.jsonld
+↑
+schema/long-pond.jsonld
+client/public/schema/long-pond.jsonld
+↑
+schema/ocean-view.jsonld
+client/public/schema/ocean-view.jsonld
+↑
+schema/orangeburg.jsonld
+client/public/schema/orangeburg.jsonld
+↑
+schema/pocono.jsonld
+client/public/schema/pocono.jsonld
+↑
+schema/raleigh.jsonld
+client/public/schema/raleigh.jsonld
+↑
+schema/rio-grande.jsonld
+client/public/schema/rio-grande.jsonld
+↑
+schema/scranton-wilkes-barre.jsonld
+client/public/schema/scranton-wilkes-barre.jsonld
+↑
+schema/south-bend.jsonld
+client/public/schema/south-bend.jsonld
+↑
+schema/swanton.jsonld
+client/public/schema/swanton.jsonld
+↑
+schema/waretown.jsonld
+client/public/schema/waretown.jsonld
+↑
+
+
+Syndication / Other Discovery
+File
+Path
+Purpose
+rss.xml
+client/public/rss.xml
+RSS feed (blog/news)
+feed.xml
+client/public/feed.xml
+Alternate Atom/RSS feed
+atom.xml
+client/public/atom.xml
+Atom format feed
+podcast.xml
+client/public/podcast.xml
+Podcast feed
+ads.txt
+client/public/ads.txt
+IAB ads.txt (ad network authorization)
+security.txt
+client/public/security.txt
+Security disclosure contact
+humans.txt
+client/public/humans.txt
+Human-readable site credits
+accessibility.txt
+client/public/accessibility.txt
+Accessibility statement
+geo.txt
+client/public/geo.txt
+Geographic metadata
+manifest.json
+client/public/manifest.json
+PWA web app manifest
+browserconfig.xml
+client/public/browserconfig.xml
+Microsoft browser tile config
+
+
+Total: 10 AI text files + robots.txt + 17 sitemaps + 6 data/feed XML files + 17 location JSON-LD files + 3 geo formats + 10 other discovery files = ~64 files
+
+
+
