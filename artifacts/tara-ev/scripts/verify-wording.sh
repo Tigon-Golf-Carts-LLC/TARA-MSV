@@ -6,7 +6,7 @@
 # carts, walking golf carts, buggies, cart bags, LSVs, "traditional golf
 # carts") are intentional and must stay; the mangled MSV forms must not exist.
 # Scans source content and, when present, the production build output
-# (dist/public). Pass --require-dist to fail if dist/public is missing.
+# (dist). Pass --require-dist to fail if dist is missing.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -16,10 +16,10 @@ if [ "${1:-}" = "--require-dist" ]; then
 fi
 
 scan_dirs=(public/content/ src/ index.html public/js/)
-if [ -d dist/public ]; then
-  scan_dirs+=(dist/public/)
+if [ -d dist ]; then
+  scan_dirs+=(dist/)
 elif [ "$require_dist" -eq 1 ]; then
-  echo "ERROR: dist/public not found — build output must exist for pre-publish verification"
+  echo "ERROR: dist not found — build output must exist for pre-publish verification"
   exit 1
 fi
 

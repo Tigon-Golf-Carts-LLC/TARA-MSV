@@ -1,7 +1,7 @@
 kind = "web"
 previewPath = "/"
 title = "TARA Medium Speed Vehicles"
-description = "A full rebuild of the client's site, rebranded as taramsv.com for TARA Medium Speed Vehicles: all pages (home, vehicle series and product pages, accessories, support, news, about, contact, policies) with original images and content, migrated to a modern React site."
+description = "A fully static, prerendered TARA Medium Speed Vehicles dealership website that can be hosted on GitHub Pages without a server, runtime API, or database."
 version = "1.0.0"
 id = "artifacts/tara-ev"
 router = "path"
@@ -15,17 +15,12 @@ localPort = 19130
 run = "pnpm --filter @workspace/tara-ev run dev"
 
 [services.production]
+serve = "static"
 
 [services.production.build]
 args = ["pnpm", "--filter", "@workspace/tara-ev", "run", "build"]
 
-[services.production.run]
-args = ["node", "artifacts/tara-ev/server.mjs"]
-
-[services.production.run.env]
-PORT = "19130"
-NODE_ENV = "production"
-
 [services.env]
 PORT = "19130"
 BASE_PATH = "/"
+SITE_DOMAIN = "https://taramsv.com"

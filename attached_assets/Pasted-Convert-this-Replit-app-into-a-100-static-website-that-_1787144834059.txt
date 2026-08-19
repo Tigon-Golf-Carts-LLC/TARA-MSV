@@ -1,0 +1,69 @@
+Convert this Replit app into a 100% static website that GitHub Pages can host.
+GitHub Pages serves files only — no Node server, no API routes, no runtime
+database. Everything dynamic must be resolved at BUILD time and baked into
+static HTML/CSS/JS.
+Do all of the following:
+1. STRIP THE SERVER
+   - Delete the Express/Node server, all API route handlers, session/auth
+     middleware, websockets, and any server-only deps from package.json.
+   - Delete database/ORM code (Drizzle/Prisma/etc.) and its config.
+   - Keep only the frontend (client/ or src/) plus shared types.
+2. REPLACE RUNTIME DATA WITH A BUILD-TIME SNAPSHOT
+   - For every piece of data the app used to fetch from its own API, write a
+     build script (script/fetch-data.ts) that pulls it once and writes plain
+     JSON into the client's public/ or src/data/ folder.
+   - Rewrite the frontend to import/fetch those static JSON files instead of
+     calling /api/*. Do not leave any fetch() pointed at a same-origin API.
+   - If a third-party API needs a key, read it from process.env in the build
+     script ONLY — never ship a key into the client bundle.
+3. FORMS AND ANYTHING THAT NEEDS A BACKEND
+   - Replace contact/lead forms with a third-party endpoint (Formspree,
+     Netlify Forms, Google Forms) or a mailto:/tel: link. Tell me which ones
+     you changed and what I need to plug in.
+4. ROUTING THAT SURVIVES STATIC HOSTING
+   - Keep client-side routing, but add a prerender step (script/prerender.ts)
+     that writes a real index.html for every known route, including dynamic
+     detail pages generated from the snapshot JSON, so each URL is directly
+     linkable and crawlable.
+   - Copy dist/index.html to dist/404.html so deep links still resolve.
+   - Add dist/.nojekyll so files/folders starting with _ are served.
+5. BASE PATH — THIS IS THE #1 THING THAT BREAKS PAGES
+   - Read the base path from an env var: base: process.env.BASE_PATH || "/".
+   - "/" for a custom domain or <user>.github.io; "/<repo-name>/" for a
+     project site.
+   - Make sure every asset, favicon, image, and internal link honors that base
+     — no hardcoded absolute "/assets/..." paths.
+6. SEO / SOCIAL
+   - Generate per-page <title>, meta description, canonical URL, and OG/Twitter
+     tags during prerender. Emit sitemap.xml and robots.txt into dist/.
+7. GITHUB ACTIONS DEPLOY
+   - Add .github/workflows/deploy.yml that runs on push to main and on
+     workflow_dispatch: checkout, setup-node 20 with npm cache, npm ci,
+     run the data fetch, run the build, then actions/upload-pages-artifact@v3
+     with path: dist and actions/deploy-pages@v4.
+   - permissions: contents read, pages write, id-token write.
+     concurrency group: pages.
+   - Put SITE_DOMAIN and BASE_PATH in the workflow env block so they're easy
+     to change.
+   - If any build secret is needed, reference it as
+     ${{ secrets.NAME }} and list the secrets I must add in the repo settings.
+8. CUSTOM DOMAIN
+   - If I'm using one, write a CNAME file containing just the bare domain and
+     make sure the build copies it into dist/ on every build (Pages wipes it
+     otherwise).
+9. PACKAGE SCRIPTS
+   - "dev": local dev server
+   - "build": fetch-data && generate-seo && vite build && prerender
+   - "build:site": same as build but skipping the network fetch
+   - "preview": serve dist/ locally
+10. VERIFY BEFORE YOU HAND IT BACK
+   - Run the full build and confirm dist/ contains index.html, 404.html,
+     .nojekyll, the snapshot JSON, sitemap.xml, and prerendered route folders.
+   - Serve dist/ statically and confirm the home page, one deep link, and one
+     dynamic detail page all render with zero network calls to a local API and
+     zero console errors.
+   - Grep the built bundle for "localhost", "/api/", and any secret names and
+     report anything you find.
+Finally, print: (a) the list of features that could NOT be made static and what
+I should use instead, (b) the exact GitHub repo settings to flip (Settings →
+Pages → Source: GitHub Actions), and (c) any secrets I need to add.

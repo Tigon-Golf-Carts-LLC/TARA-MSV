@@ -1,12 +1,47 @@
 import { useEffect, useRef, useState } from 'react';
 import { injectStructuredData } from './structuredData';
 
+declare const __SITE_BASE_URL__: string;
+
 const BASE = import.meta.env.BASE_URL; // e.g. "/"
+const BASE_PREFIX = BASE === '/' ? '' : BASE.replace(/\/$/, '');
+const URL_ATTRIBUTES = [
+  'href',
+  'src',
+  'action',
+  'poster',
+  'data-src',
+  'data-lazy-src',
+  'data-original',
+  'data-bg',
+  'data-background',
+] as const;
 
 type RouteMeta = { file: string; title: string; description?: string; bodyClass: string; redirect?: never };
 
 type RouteRedirect = { redirect: string };
 type Routes = Record<string, RouteEntry>;
+
+function prefixRootRelativeUrl(value: string): string {
+  if (
+    !BASE_PREFIX ||
+    !value.startsWith('/') ||
+    value.startsWith('//') ||
+    value === BASE_PREFIX ||
+    value.startsWith(`${BASE_PREFIX}/`)
+  ) {
+    return value;
+  }
+  return `${BASE_PREFIX}${value}`;
+}
+
+function rewriteInlineCssForBasePath(style: string): string {
+  return style.replace(
+    /url\((["']?)(\/(?!\/)[^)"']*)\1\)/gi,
+    (_match, quote, url) =>
+      `url(${quote}${prefixRootRelativeUrl(String(url))}${quote})`,
+  );
+}
 
 function normalizePath(p: string): string {
   let path = p;
@@ -16,6 +51,102 @@ function normalizePath(p: string): string {
   if (!path.startsWith('/')) path = '/' + path;
   if (path !== '/' && !path.endsWith('/')) path += '/';
   return path;
+}
+
+/**
+ * Keep cloned, root-relative links inside a GitHub Pages project base path.
+ * External, protocol-relative, mailto, tel, hash, and data URLs are untouched.
+ */
+function applyBasePath(root: ParentNode) {
+  if (!BASE_PREFIX) return;
+  root
+    .querySelectorAll<HTMLElement>(
+      URL_ATTRIBUTES.map((attribute) => `[${attribute}]`)
+        .concat('[srcset]', '[data-srcset]', '[style]')
+        .join(', '),
+    )
+    .forEach((element) => {
+      for (const attribute of URL_ATTRIBUTES) {
+        const value = element.getAttribute(attribute);
+        if (value) {
+          element.setAttribute(attribute, prefixRootRelativeUrl(value));
+        }
+      }
+
+      for (const attribute of ['srcset', 'data-srcset']) {
+        const value = element.getAttribute(attribute);
+        if (!value) continue;
+        element.setAttribute(
+          attribute,
+          value
+            .split(',')
+            .map((candidate) => {
+              const [url, ...descriptor] = candidate.trim().split(/\s+/);
+              const nextUrl = prefixRootRelativeUrl(url);
+              return [nextUrl, ...descriptor].join(' ');
+            })
+            .join(', '),
+        );
+      }
+
+      const style = element.getAttribute('style');
+      if (style) {
+        element.setAttribute('style', rewriteInlineCssForBasePath(style));
+      }
+    });
+}
+
+/** Prefix cloned URLs before insertion so lazy images cannot request "/" first. */
+function rewriteHtmlForBasePath(html: string): string {
+  if (!BASE_PREFIX) return html;
+  const attributes = URL_ATTRIBUTES.join('|');
+  let result = html.replace(
+    new RegExp(`\\b(${attributes})=([\"'])(\\/(?!\\/)[^\"']*)\\2`, 'gi'),
+    (_match, attribute, quote, value) =>
+      `${attribute}=${quote}${prefixRootRelativeUrl(String(value))}${quote}`,
+  );
+  result = result.replace(
+    /\b(srcset|data-srcset)=(["'])([^"']*)\2/gi,
+    (_match, attribute, quote, value) => {
+      const nextValue = String(value)
+        .split(',')
+        .map((candidate) => {
+          const [url, ...descriptor] = candidate.trim().split(/\s+/);
+          return [
+            prefixRootRelativeUrl(url),
+            ...descriptor,
+          ].join(' ');
+        })
+        .join(', ');
+      return `${attribute}=${quote}${nextValue}${quote}`;
+    },
+  );
+  return rewriteInlineCssForBasePath(result);
+}
+
+/** Replace the removed PHP search endpoint with a backend-free site search. */
+function makeSearchFormsStatic(root: ParentNode) {
+  root
+    .querySelectorAll<HTMLFormElement>('form[action="/search.php"]')
+    .forEach((form) => {
+      form.action = 'https://www.google.com/search';
+      form.method = 'get';
+      form.querySelector<HTMLInputElement>('input[name="s"]')?.setAttribute(
+        'name',
+        'q',
+      );
+      const category = form.querySelector<HTMLInputElement>('input[name="cat"]');
+      if (category) {
+        category.name = 'sitesearch';
+        category.value = 'taramsv.com';
+      } else {
+        const siteSearch = document.createElement('input');
+        siteSearch.type = 'hidden';
+        siteSearch.name = 'sitesearch';
+        siteSearch.value = 'taramsv.com';
+        form.appendChild(siteSearch);
+      }
+    });
 }
 
 function lookupRoute(routes: Routes, path: string): RouteEntry | null {
@@ -93,8 +224,7 @@ export default function App() {
         injectStructuredData(path, meta.title);
 
         // Update per-route meta: canonical, description, OG, Twitter Card.
-        const siteOrigin = 'https://taramsv.com';
-        const canonicalUrl = `${siteOrigin}${path}`;
+        const canonicalUrl = `${__SITE_BASE_URL__}${path}`;
 
         // Canonical link tag
         let canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
@@ -126,7 +256,9 @@ export default function App() {
         if (twDesc && meta.description) twDesc.setAttribute('content', meta.description);
 
         if (meta.bodyClass) document.body.className = meta.bodyClass;
-        containerRef.current.innerHTML = html;
+        containerRef.current.innerHTML = rewriteHtmlForBasePath(html);
+        makeSearchFormsStatic(containerRef.current);
+        applyBasePath(containerRef.current);
         setStatus('ready');
 
         // Load the site's original behavior script (menus, sliders, tabs).
@@ -223,7 +355,7 @@ export default function App() {
               </div>
             </div>
             <div class="tf-bottom">
-              <span>&copy; ${new Date().getFullYear()} TARA Medium Speed Vehicles. All rights reserved.</span>
+              <span>&copy; ${new Date().getFullYear()} <a href="https://tigongolfcarts.com/tara-ev">TARA Medium Speed Vehicles</a>. All rights reserved.</span>
               <span class="tf-legal">
                 <a href="/privacy-policy/">Privacy Policy</a>
                 <a href="/terms-and-conditions/">Terms &amp; Conditions</a>
@@ -233,6 +365,8 @@ export default function App() {
           // after the page content (JS-injected drawers live at body end).
           containerRef.current.appendChild(footer);
         }
+
+        applyBasePath(containerRef.current);
 
         // Site-wide "Call Now" button (dealership phone line).
         if (!document.getElementById('tara-call-now')) {

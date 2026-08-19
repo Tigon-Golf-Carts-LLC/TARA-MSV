@@ -1,6 +1,5 @@
 import path from 'path';
 import fs from 'node:fs';
-import { execFileSync } from 'node:child_process';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
@@ -8,21 +7,21 @@ import type { Plugin, ViteDevServer } from 'vite';
 
 import runtimeErrorOverlay from '@replit/vite-plugin-runtime-error-modal';
 
-const rawPort = process.env.PORT;
-
-if (!rawPort) {
-  throw new Error(
-    'PORT environment variable is required but was not provided.',
-  );
-}
-
-const port = Number(rawPort);
+const port = Number(process.env.PORT || 4173);
 
 if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
+  throw new Error(`Invalid PORT value: "${process.env.PORT}"`);
 }
 
-const basePath = process.env.BASE_PATH;
+const rawBasePath = process.env.BASE_PATH || '/';
+const basePath = `/${rawBasePath.replace(/^\/|\/$/g, '')}${
+  rawBasePath === '/' ? '' : '/'
+}`;
+const siteDomain = (process.env.SITE_DOMAIN || 'https://taramsv.com').replace(
+  /\/$/,
+  '',
+);
+const siteBaseUrl = `${siteDomain}${basePath === '/' ? '' : basePath.slice(0, -1)}`;
 
 const DEV_REDIRECTS: Record<string, string> = {
   // Percent-encoding case duplicate: lowercase hex → uppercase canonical.
@@ -43,17 +42,13 @@ const DEV_REDIRECTS: Record<string, string> = {
   '/mainitenance-support/': '/maintenance-support/',
   '/techncal-support/': '/technical-support/',
 };
-const publishedDomain = process.env.REPLIT_DOMAINS?.split(',')[0]?.trim();
-
 const absoluteOgUrls = () => ({
   name: 'absolute-og-urls',
   apply: 'build' as const,
   transformIndexHtml(html: string) {
-    if (!publishedDomain) return html;
-    const origin = `https://${publishedDomain}`;
     return html.replace(
       /(<meta\s+property="og:(?:image|url)"\s+content=")(\/[^"]*)(")/g,
-      (_m, pre, path, post) => `${pre}${origin}${path}${post}`,
+      (_m, pre, urlPath, post) => `${pre}${siteBaseUrl}${urlPath}${post}`,
     );
   },
 });
@@ -210,46 +205,15 @@ const spaMetaMiddleware = (): Plugin => ({
   },
 });
 
-// ─── Post-build pre-renderer ─────────────────────────────────────────────────
-
-const prerenderPlugin = (): Plugin => ({
-  name: 'prerender-routes',
-  apply: 'build' as const,
-  closeBundle() {
-    const prerenderScript = path.resolve(import.meta.dirname, 'scripts', 'prerender.mjs');
-    if (!fs.existsSync(prerenderScript)) {
-      // Hard failure — the prerender script is required for production builds.
-      throw new Error('[prerender] prerender.mjs not found — cannot generate per-route HTML.');
-    }
-    const outDir = path.resolve(import.meta.dirname, 'dist', 'public');
-    // Use the *built* index.html as the shell so generated pages reference
-    // Vite's hashed /assets/index-*.js bundles, not the TS source entry.
-    const shellHtml = path.join(outDir, 'index.html');
-    const originArg = publishedDomain
-      ? `https://${publishedDomain}`
-      : 'https://taramsv.com';
-    // Let execFileSync throw on non-zero exit — this propagates prerender
-    // failures as a build error so broken output is never silently shipped.
-    execFileSync(
-      process.execPath,
-      [
-        prerenderScript,
-        '--shellHtml', shellHtml,
-        '--outDir', outDir,
-        '--origin', originArg,
-      ],
-      { stdio: 'inherit' },
-    );
-  },
-});
-
 export default defineConfig({
   base: basePath,
+  define: {
+    __SITE_BASE_URL__: JSON.stringify(siteBaseUrl),
+  },
   plugins: [
     redirectPlugin(),
     absoluteOgUrls(),
     spaMetaMiddleware(),
-    prerenderPlugin(),
     react(),
     tailwindcss(),
     runtimeErrorOverlay(),
@@ -281,7 +245,7 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
-    outDir: path.resolve(import.meta.dirname, 'dist/public'),
+    outDir: path.resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
   },
   server: {

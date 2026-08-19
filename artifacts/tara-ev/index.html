@@ -54,18 +54,20 @@
       ]
     }
     </script>
-    <link rel="icon" href="/favicon.ico" sizes="48x48" />
-    <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/css/site.css" />
-    <link rel="stylesheet" href="/css/menu-image.css" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="search" type="application/opensearchdescription+xml" title="TARA MSV" href="/opensearch.xml" />
-    <meta name="msapplication-config" content="/browserconfig.xml" />
+    <link rel="icon" href="%BASE_URL%favicon.ico" sizes="48x48" />
+    <link rel="icon" type="image/png" href="%BASE_URL%images/favicon.png" />
+    <link rel="apple-touch-icon" href="%BASE_URL%images/apple-touch-icon.png" />
+    <link rel="stylesheet" href="%BASE_URL%css/site.css" />
+    <link rel="stylesheet" href="%BASE_URL%css/menu-image.css" />
+    <link rel="stylesheet" href="%BASE_URL%css/static-overrides.css" />
+    <link rel="manifest" href="%BASE_URL%manifest.json" />
+    <link rel="search" type="application/opensearchdescription+xml" title="TARA MSV" href="%BASE_URL%opensearch.xml" />
+    <meta name="msapplication-config" content="%BASE_URL%browserconfig.xml" />
     <meta name="theme-color" content="#101210" />
   </head>
   <body>
     <div id="root"></div>
+    <!-- Vite resolves this source entry at build time and prefixes the emitted bundle. -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

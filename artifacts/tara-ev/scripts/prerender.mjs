@@ -9,7 +9,7 @@
  *   <outDir>/<route-slug>/index.html
  *
  * IMPORTANT: the shell HTML must be the *already-built* index.html
- * (i.e. dist/public/index.html after `vite build`) so that the generated
+ * (i.e. dist/index.html after `vite build`) so that the generated
  * files reference the hashed JS/CSS asset bundles, not the source
  * /src/main.tsx entry point.  Pass --shellHtml <path> to provide it.
  *
@@ -40,14 +40,19 @@ function getArg(name) {
 }
 
 const shellHtmlPath =
-  getArg('--shellHtml') ?? path.join(artifactDir, 'dist', 'public', 'index.html');
+  getArg('--shellHtml') ?? path.join(artifactDir, 'dist', 'index.html');
 const outDir =
-  getArg('--outDir') ?? path.join(artifactDir, 'dist', 'public');
-const origin =
+  getArg('--outDir') ?? path.join(artifactDir, 'dist');
+const siteDomain = (
   getArg('--origin') ??
-  (process.env.REPLIT_DOMAINS
-    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0].trim()}`
-    : 'https://taramsv.com');
+  process.env.SITE_DOMAIN ??
+  'https://taramsv.com'
+).replace(/\/+$/, '');
+const rawBasePath = getArg('--base') ?? process.env.BASE_PATH ?? '/';
+const basePath =
+  rawBasePath === '/' ? '/' : `/${rawBasePath.replace(/^\/|\/$/g, '')}/`;
+const basePrefix = basePath === '/' ? '' : basePath.replace(/\/$/, '');
+const siteBaseUrl = `${siteDomain}${basePrefix}`;
 
 // ─── Validation ───────────────────────────────────────────────────────────────
 
@@ -67,7 +72,7 @@ const shellHtml = fs.readFileSync(shellHtmlPath, 'utf8');
 if (/src=["']\/src\/main\.tsx["']/.test(shellHtml)) {
   console.error(
     '[prerender] ERROR: The shell HTML still references /src/main.tsx.\n' +
-      '  Pre-rendering requires the *built* dist/public/index.html, not the\n' +
+      '  Pre-rendering requires the *built* dist/index.html, not the\n' +
       '  source index.html.  Run `vite build` first and pass --shellHtml to\n' +
       '  the correct path.',
   );
@@ -119,16 +124,136 @@ function extractOgImage(html) {
   return '/images/og-image.png';
 }
 
+/**
+ * Prefix root-relative paths for GitHub project sites and replace the removed
+ * PHP search handler with Google site search. This is applied to prerendered
+ * markup; App.tsx performs the equivalent transform after client rendering.
+ */
+function makeContentStatic(html) {
+  const urlAttributes = [
+    'href',
+    'src',
+    'action',
+    'poster',
+    'data-src',
+    'data-lazy-src',
+    'data-original',
+    'data-bg',
+    'data-background',
+  ].join('|');
+  let result = html
+    .replace(
+      /<form(\s[^>]*)action=["']\/search\.php["']([^>]*)>/gi,
+      '<form$1action="https://www.google.com/search"$2>',
+    )
+    .replace(/(<input\b[^>]*\bname=["'])s(["'][^>]*>)/gi, '$1q$2')
+    .replace(
+      /(<input\b[^>]*\bname=["'])cat(["'][^>]*\bvalue=["'])[^"']*(["'][^>]*>)/gi,
+      '$1sitesearch$2taramsv.com$3',
+    );
+
+  if (!basePrefix) return result;
+
+  result = result.replace(
+    new RegExp(`\\b(${urlAttributes})=([\"'])/(?!/)`, 'gi'),
+    (_match, attribute, quote) => `${attribute}=${quote}${basePrefix}/`,
+  );
+  result = result.replace(
+    /\b(srcset|data-srcset)=(["'])([^"']*)\2/gi,
+    (_match, attribute, quote, value) => {
+      const nextValue = String(value)
+        .split(',')
+        .map((candidate) => {
+          const [url, ...descriptor] = candidate.trim().split(/\s+/);
+          return [
+            url.startsWith('/') && !url.startsWith('//')
+              ? `${basePrefix}${url}`
+              : url,
+            ...descriptor,
+          ].join(' ');
+        })
+        .join(', ');
+      return `${attribute}=${quote}${nextValue}${quote}`;
+    },
+  );
+  result = result.replace(
+    /url\((["']?)\/(?!\/)/gi,
+    (_match, quote) => `url(${quote}${basePrefix}/`,
+  );
+  return result;
+}
+
+function walkFiles(directory, extension, visit) {
+  if (!fs.existsSync(directory)) return;
+  for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+    const entryPath = path.join(directory, entry.name);
+    if (entry.isDirectory()) {
+      walkFiles(entryPath, extension, visit);
+    } else if (entry.name.toLowerCase().endsWith(extension)) {
+      visit(entryPath);
+    }
+  }
+}
+
+function postprocessCopiedStaticFiles() {
+  walkFiles(path.join(outDir, 'content'), '.html', (htmlPath) => {
+    const html = fs.readFileSync(htmlPath, 'utf8');
+    fs.writeFileSync(htmlPath, makeContentStatic(html), 'utf8');
+  });
+
+  if (basePrefix) {
+    walkFiles(path.join(outDir, 'css'), '.css', (cssPath) => {
+      const css = fs.readFileSync(cssPath, 'utf8').replace(
+        /url\((["']?)\/(?!\/)/gi,
+        (_match, quote) => `url(${quote}${basePrefix}/`,
+      );
+      fs.writeFileSync(cssPath, css, 'utf8');
+    });
+  }
+}
+
+function assertProjectBasePaths() {
+  if (!basePrefix) return;
+  const htmlUrls =
+    /\b(?:href|src|action|poster|data-src|data-lazy-src|data-original|data-bg|data-background|srcset|data-srcset)=(["'])(\/(?!\/)[^"']*)\1/gi;
+  const cssUrls = /url\((["']?)(\/(?!\/)[^)"']*)\1\)/gi;
+
+  walkFiles(outDir, '.html', (htmlPath) => {
+    const html = fs.readFileSync(htmlPath, 'utf8');
+    const leak = [...html.matchAll(htmlUrls)].find(
+      (match) => !match[2].startsWith(`${basePrefix}/`),
+    );
+    if (leak) {
+      throw new Error(
+        `[prerender] Unprefixed project-base URL "${leak[2]}" remains in ${htmlPath}`,
+      );
+    }
+  });
+  walkFiles(path.join(outDir, 'css'), '.css', (cssPath) => {
+    const css = fs.readFileSync(cssPath, 'utf8');
+    const leak = [...css.matchAll(cssUrls)].find(
+      (match) => !match[2].startsWith(`${basePrefix}/`),
+    );
+    if (leak) {
+      throw new Error(
+        `[prerender] Unprefixed project-base CSS URL "${leak[2]}" remains in ${cssPath}`,
+      );
+    }
+  });
+}
+
 // ─── Per-route HTML builder ───────────────────────────────────────────────────
 
 function buildPageHtml(routePath, routeMeta, contentHtml) {
-  const title = routeMeta.title || 'TARA Neighborhood Electric Vehicles';
-  const description = extractDescription(contentHtml);
+  const title = routeMeta.title || 'TARA Medium Speed Vehicles';
+  const description =
+    routeMeta.description || extractDescription(contentHtml);
   const ogImage = extractOgImage(contentHtml);
-  const canonicalUrl = `${origin}${routePath}`;
+  const canonicalUrl = `${siteBaseUrl}${routePath}`;
   const absoluteOgImage = ogImage.startsWith('http')
     ? ogImage
-    : `${origin}${ogImage}`;
+    : `${siteBaseUrl}${ogImage}`;
+  const staticContentHtml = makeContentStatic(contentHtml);
 
   let html = shellHtml;
 
@@ -161,13 +286,27 @@ function buildPageHtml(routePath, routeMeta, contentHtml) {
     /<meta\s+property="og:image"[^>]*\/?>/i,
     `<meta property="og:image" content="${absoluteOgImage}" />`,
   );
+  html = html.replace(
+    /<meta\s+name="twitter:title"[^>]*\/?>/i,
+    `<meta name="twitter:title" content="${escHtml(title)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:description"[^>]*\/?>/i,
+    `<meta name="twitter:description" content="${escHtml(description)}" />`,
+  );
+  html = html.replace(
+    /<meta\s+name="twitter:image"[^>]*\/?>/i,
+    `<meta name="twitter:image" content="${absoluteOgImage}" />`,
+  );
 
-  // Inject canonical + og:url before </head>
-  const canonicalBlock = [
-    `  <link rel="canonical" href="${canonicalUrl}" />`,
-    `  <meta property="og:url" content="${canonicalUrl}" />`,
-  ].join('\n');
-  html = html.replace('</head>', `${canonicalBlock}\n</head>`);
+  html = html.replace(
+    /<link\s+rel="canonical"[^>]*\/?>/i,
+    `<link rel="canonical" href="${canonicalUrl}" />`,
+  );
+  html = html.replace(
+    /<meta\s+property="og:url"[^>]*\/?>/i,
+    `<meta property="og:url" content="${canonicalUrl}" />`,
+  );
 
   // Embed page content inside #root so crawlers that don't execute JS
   // still see the full page content, headings, product specs, and links.
@@ -175,7 +314,7 @@ function buildPageHtml(routePath, routeMeta, contentHtml) {
   // SPA re-renders, replacing this static content seamlessly.
   html = html.replace(
     '<div id="root"></div>',
-    `<div id="root" data-prerendered="1">${contentHtml}</div>`,
+    `<div id="root" data-prerendered="1">${staticContentHtml}</div>`,
   );
 
   return html;
@@ -188,8 +327,10 @@ function buildPageHtml(routePath, routeMeta, contentHtml) {
  * that actually exists in outDir/assets/.  Exits non-zero on failure.
  */
 function assertJsAssetPresent(generatedHtml, routePath) {
-  // The built shell should have something like: /assets/index-Abc123.js
-  const match = generatedHtml.match(/src=["'](\/assets\/[^"']+\.js)["']/);
+  // The built shell should have /assets/... or /<repo>/assets/... .
+  const match = generatedHtml.match(
+    /src=["']([^"']*\/assets\/[^"']+\.js)["']/,
+  );
   if (!match) {
     console.error(
       `[prerender] ASSERTION FAILED for "${routePath}": generated HTML has no` +
@@ -198,7 +339,10 @@ function assertJsAssetPresent(generatedHtml, routePath) {
     process.exit(1);
   }
   // Confirm the referenced asset file actually exists on disk.
-  const assetRel = match[1].replace(/^\//, ''); // strip leading /
+  let assetRel = match[1].replace(/^\//, '');
+  if (basePrefix && assetRel.startsWith(`${basePrefix.replace(/^\//, '')}/`)) {
+    assetRel = assetRel.slice(basePrefix.replace(/^\//, '').length + 1);
+  }
   const assetPath = path.join(outDir, assetRel);
   if (!fs.existsSync(assetPath)) {
     console.error(
@@ -207,6 +351,28 @@ function assertJsAssetPresent(generatedHtml, routePath) {
     );
     process.exit(1);
   }
+}
+
+function buildRedirectHtml(routePath, targetPath) {
+  const target = `${basePrefix}${targetPath}`;
+  const canonicalUrl = `${siteBaseUrl}${targetPath}`;
+  let html = shellHtml;
+  html = html.replace(
+    /<title>[^<]*<\/title>/,
+    '<title>Redirecting… | TARA Medium Speed Vehicles</title>',
+  );
+  html = html.replace(
+    '</head>',
+    `  <link rel="canonical" href="${canonicalUrl}" />\n` +
+      `  <meta http-equiv="refresh" content="0;url=${target}" />\n` +
+      `  <script>window.location.replace(${JSON.stringify(target)});</script>\n` +
+      '</head>',
+  );
+  html = html.replace(
+    '<div id="root"></div>',
+    `<div id="root"><p>Redirecting to <a href="${target}">${target}</a>…</p></div>`,
+  );
+  return html;
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
@@ -224,6 +390,7 @@ async function main() {
   }
 
   const routes = JSON.parse(fs.readFileSync(routesPath, 'utf8'));
+  postprocessCopiedStaticFiles();
 
   // Determine if the built assets directory exists so we can run the
   // JS-asset assertion (it won't exist in unit-test / dry-run contexts).
@@ -233,9 +400,19 @@ async function main() {
   let generated = 0;
 
   for (const [routePath, routeMeta] of Object.entries(routes)) {
-    // Redirect-only routes have no content file to prerender; they are
-    // handled as HTTP 301s by the server config.
-    if (routeMeta.redirect || !routeMeta.file) continue;
+    if (routeMeta.redirect) {
+      const redirectHtml = buildRedirectHtml(routePath, routeMeta.redirect);
+      const redirectSlug = routePath.replace(/^\/|\/$/g, '');
+      const redirectFile = path.join(outDir, redirectSlug, 'index.html');
+      fs.mkdirSync(path.dirname(redirectFile), { recursive: true });
+      fs.writeFileSync(redirectFile, redirectHtml, 'utf8');
+      generated++;
+      continue;
+    }
+    if (!routeMeta.file) {
+      console.error(`[prerender] ERROR: route "${routePath}" has no content file`);
+      process.exit(1);
+    }
     const contentFile = path.join(
       artifactDir,
       'public',
@@ -270,6 +447,35 @@ async function main() {
     generated++;
   }
 
+  // GitHub Pages deep-link fallback and static-host control files.
+  fs.copyFileSync(
+    path.join(outDir, 'index.html'),
+    path.join(outDir, '404.html'),
+  );
+  fs.writeFileSync(path.join(outDir, '.nojekyll'), '', 'utf8');
+
+  const manifestPath = path.join(outDir, 'manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+    manifest.start_url = basePath;
+    manifest.icons = (manifest.icons || []).map((icon) => ({
+      ...icon,
+      src:
+        typeof icon.src === 'string' &&
+        icon.src.startsWith('/') &&
+        !icon.src.startsWith('//')
+          ? `${basePrefix}${icon.src}`
+          : icon.src,
+    }));
+    fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
+  }
+
+  const cnameSource = path.join(artifactDir, 'CNAME');
+  if (fs.existsSync(cnameSource)) {
+    fs.copyFileSync(cnameSource, path.join(outDir, 'CNAME'));
+  }
+
+  assertProjectBasePaths();
   console.log(`[prerender] Generated ${generated} page(s) → ${outDir}`);
 }
 

@@ -4,10 +4,10 @@
 # widget, web footer, or inquiry form section. See replit.md
 # "Client-requested removals". These have been restored accidentally by
 # past merges (e.g. offline localization) — this script guards against that.
-# Scans source files, and also the production build output (dist/public)
+# Scans source files, and also the production build output (dist)
 # when it exists, so a build step or vendored dependency can't reintroduce
 # removed content into the published site. Pass --require-dist to fail if
-# dist/public is missing (used by the production build before publish).
+# dist is missing (used by the production build before publish).
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
@@ -17,10 +17,10 @@ if [ "${1:-}" = "--require-dist" ]; then
 fi
 
 scan_dirs=(public/content/ src/ index.html public/js/)
-if [ -d dist/public ]; then
-  scan_dirs+=(dist/public/)
+if [ -d dist ]; then
+  scan_dirs+=(dist/)
 elif [ "$require_dist" -eq 1 ]; then
-  echo "ERROR: dist/public not found — build output must exist for pre-publish verification"
+  echo "ERROR: dist not found — build output must exist for pre-publish verification"
   exit 1
 fi
 
@@ -40,7 +40,7 @@ check() {
 
 # Vendored Mautic form scripts must not exist at all
 for f in public/js/form-generate.js public/js/mautic-form.js \
-         dist/public/js/form-generate.js dist/public/js/mautic-form.js; do
+         dist/js/form-generate.js dist/js/mautic-form.js; do
   if [ -e "$f" ]; then
     echo "REMOVED FILE REAPPEARED: $f"
     fail=1

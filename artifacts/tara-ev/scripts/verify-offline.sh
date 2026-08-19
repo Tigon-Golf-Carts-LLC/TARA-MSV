@@ -8,7 +8,10 @@ cd "$(dirname "$0")/../public"
 fail=0
 
 # Remote static assets by extension: http(s)://... or protocol-relative //host/...
-remote=$(grep -rEoh "(https?:)?//[a-zA-Z0-9.-]+\.[a-z]{2,}/[^\"' )<>]+\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|woff2?)(\?[^\"' )<>]*)?" content/ css/ js/ 2>/dev/null | grep -vE 'react\.dev|idangero' | sort -u || true)
+# Absolute taramsv.com image URLs inside JSON-LD are canonical metadata, not
+# browser asset requests. All rendered <img> and stylesheet references remain
+# local and are still caught by this guard.
+remote=$(grep -rEoh "(https?:)?//[a-zA-Z0-9.-]+\.[a-z]{2,}/[^\"' )<>]+\.(css|js|jpg|jpeg|png|webp|gif|svg|ico|woff2?)(\?[^\"' )<>]*)?" content/ css/ js/ 2>/dev/null | grep -vE 'react\.dev|idangero|^https://taramsv\.com/images/' | sort -u || true)
 if [ -n "$remote" ]; then echo "REMOTE STATIC ASSETS FOUND:"; echo "$remote"; fail=1; fi
 
 # CSS url() referencing remote hosts
