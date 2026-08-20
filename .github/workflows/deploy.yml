@@ -12,7 +12,9 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # Let an in-flight deploy finish — cancelling one leaves the live site on the
+  # previous build with no obvious signal that it happened.
+  cancel-in-progress: false
 
 env:
   # Change these two to move the site. BASE_PATH is "/" for a custom domain or
@@ -30,13 +32,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # corepack reads "packageManager" from package.json, so this activates the
+      # exact pnpm that produced pnpm-lock.yaml. Leaving it unpinned made
+      # corepack fetch the newest pnpm, which needs a newer Node than the one
+      # pinned below and crashed the job before install (No such built-in
+      # module: node:sqlite).
       - name: Enable pnpm
         run: corepack enable
 
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: pnpm
 
       - name: Install dependencies
@@ -60,6 +67,10 @@ jobs:
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          # Switches Settings → Pages → Source to "GitHub Actions" if it is not
+          # set yet, instead of failing the run with "Get Pages site failed".
+          enablement: true
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
