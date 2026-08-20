@@ -270,7 +270,7 @@ function assertProjectBasePaths() {
 // ─── Per-route HTML builder ───────────────────────────────────────────────────
 
 function buildPageHtml(routePath, routeMeta, contentHtml) {
-  const title = routeMeta.title || 'TARA Medium Speed Vehicles';
+  const title = routeMeta.title || 'TARA MSV Medium Speed Vehicles';
   const description =
     routeMeta.description || extractDescription(contentHtml);
   const ogImage = extractOgImage(contentHtml);

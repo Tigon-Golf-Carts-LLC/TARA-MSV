@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>TARA Dealership Podcast</title>
+    <title>TARA MSV Medium Speed Vehicles Podcast</title>
     <link>https://taramsv.com/</link>
     <language>en-us</language>
-    <itunes:author>TARA Dealership</itunes:author>
-    <description>No podcast episodes are published yet. This feed is reserved for future TARA Dealership audio content.</description>
+    <itunes:author>TARA MSV Medium Speed Vehicles</itunes:author>
+    <description>No podcast episodes are published yet. This feed is reserved for future TARA MSV Medium Speed Vehicles audio content.</description>
   </channel>
 </rss>
