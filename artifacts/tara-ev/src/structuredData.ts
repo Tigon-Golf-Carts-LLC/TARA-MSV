@@ -7,7 +7,7 @@
  */
 
 const SITE_URL = 'https://www.taramsv.com';
-const SITE_NAME = 'TARA Medium Speed Vehicles';
+const SITE_NAME = 'TARA MSV Medium Speed Vehicles';
 const LOGO_URL = `${SITE_URL}/images/tara-nev-logo.png`;
 const PHONE = '+1-844-844-3432';
 
@@ -111,7 +111,12 @@ function buildBreadcrumb(path: string, pageTitle: string) {
 /** Strip common site-name suffixes from route titles to get a clean page name. */
 function stripSiteSuffix(title: string): string {
   return title
-    .replace(/\s*[-|]\s*TARA (MEDIUM SPEED VEHICLE(S)?|Medium Speed Vehicles|Dealership).*$/i, '')
+    // Must also strip the "TARA MSV Medium Speed Vehicles" suffix, or the site
+    // name leaks into every JSON-LD product/article name.
+    .replace(
+      /\s*[-|]\s*TARA\s+(MSV(\s+MEDIUM\s+SPEED\s+VEHICLES?)?|MEDIUM SPEED VEHICLE(S)?|Medium Speed Vehicles|Dealership).*$/i,
+      '',
+    )
     .replace(/\s*[-|]\s*TARA$/i, '')
     .trim();
 }

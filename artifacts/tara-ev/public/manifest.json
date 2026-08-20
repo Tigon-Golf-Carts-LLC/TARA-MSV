@@ -1,11 +1,11 @@
 {
-  "name": "TARA Medium Speed Vehicles \u2014 TARA Dealership",
+  "name": "TARA MSV Medium Speed Vehicles",
   "short_name": "TARA MSV",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#101210",
   "theme_color": "#101210",
-  "description": "Authorized US TARA Dealership for electric medium speed vehicles and utility vehicles.",
+  "description": "TARA Medium Speed Vehicles offers electric golf carts and utility vehicles for your every day transportation needs.",
   "icons": [
     {
       "src": "/favicon.ico",
