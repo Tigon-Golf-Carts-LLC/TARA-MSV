@@ -315,8 +315,17 @@ async function runEncodePhase() {
     // references to .webp repairs itself on the next run.
     lookup[key] = stem;
     lookup[stem + '.webp'] = stem;
-    const strayWebp = path.join(OUT_DIR, (stem + '.webp').replace(/^\/images\//, ''));
-    if (fs.existsSync(strayWebp)) fs.rmSync(strayWebp);
+    // Drop the base *and* the responsive ladder left behind if this asset was
+    // converted by an earlier pipeline version. The image cache is restored
+    // across CI runs, so stale derivatives would otherwise ship forever.
+    const strayDir = path.dirname(path.join(OUT_DIR, stem.replace(/^\/images\//, '')));
+    const strayBase = path.basename(stem);
+    if (fs.existsSync(strayDir)) {
+      const strayRe = new RegExp(`^${strayBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(-w\\d+)?\\.webp$`);
+      for (const name of fs.readdirSync(strayDir)) {
+        if (strayRe.test(name)) fs.rmSync(path.join(strayDir, name));
+      }
+    }
   }
 
   // SVG + passthrough assets
