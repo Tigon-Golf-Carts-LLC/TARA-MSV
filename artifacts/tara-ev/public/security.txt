@@ -1,5 +1,5 @@
-Contact: mailto:info@taramsv.com
+Contact: mailto:taradealership@gmail.com
 Expires: 2027-08-13T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://taramsv.com/security.txt
-Policy: Report vulnerabilities responsibly to info@taramsv.com. We do not currently operate a bug bounty program.
+Policy: Report vulnerabilities responsibly to taradealership@gmail.com. We do not currently operate a bug bounty program.

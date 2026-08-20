@@ -129,6 +129,31 @@ function extractOgImage(html) {
  * PHP search handler with Google site search. This is applied to prerendered
  * markup; App.tsx performs the equivalent transform after client rendering.
  */
+/**
+ * Conservative HTML minification. Only strips comments and collapses
+ * whitespace-only runs between block boundaries — never touches whitespace that
+ * separates inline elements, and never touches <pre>/<textarea>/<script>/<style>,
+ * so the cloned theme renders byte-for-byte the same.
+ */
+function minifyHtml(html) {
+  const guarded = [];
+  const stash = html.replace(
+    /<(pre|textarea|script|style)\b[\s\S]*?<\/\1>/gi,
+    (m) => `\u0000${guarded.push(m) - 1}\u0000`,
+  );
+  const squeezed = stash
+    // drop comments, keeping conditional comments and the clone's structural markers
+    .replace(/<!--(?!\[if|<!)([\s\S]*?)-->/g, (m, body) =>
+      /^\s*(\/?\s*(wp:|\/)|\[)/.test(body) ? m : '',
+    )
+    // collapse indentation and blank lines; a single newline is kept so inline
+    // elements still get their separating whitespace
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n[ \t]+/g, '\n')
+    .replace(/\n{2,}/g, '\n');
+  return squeezed.replace(/\u0000(\d+)\u0000/g, (_m, i) => guarded[Number(i)]);
+}
+
 function makeContentStatic(html) {
   const urlAttributes = [
     'href',
@@ -198,7 +223,7 @@ function walkFiles(directory, extension, visit) {
 function postprocessCopiedStaticFiles() {
   walkFiles(path.join(outDir, 'content'), '.html', (htmlPath) => {
     const html = fs.readFileSync(htmlPath, 'utf8');
-    fs.writeFileSync(htmlPath, makeContentStatic(html), 'utf8');
+    fs.writeFileSync(htmlPath, minifyHtml(makeContentStatic(html)), 'utf8');
   });
 
   if (basePrefix) {
@@ -429,7 +454,7 @@ async function main() {
     }
 
     const contentHtml = fs.readFileSync(contentFile, 'utf8');
-    const pageHtml = buildPageHtml(routePath, routeMeta, contentHtml);
+    const pageHtml = minifyHtml(buildPageHtml(routePath, routeMeta, contentHtml));
 
     // Validate the generated page references an existing JS bundle.
     if (canAssert) {
@@ -469,6 +494,11 @@ async function main() {
     }));
     fs.writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   }
+
+  // routes.json is a build-time authoring source; the client reads the
+  // minified site-snapshot.json instead, so keep 277 KB out of the artifact.
+  const builtRoutes = path.join(outDir, 'content', 'routes.json');
+  if (fs.existsSync(builtRoutes)) fs.rmSync(builtRoutes);
 
   const cnameSource = path.join(artifactDir, 'CNAME');
   if (fs.existsSync(cnameSource)) {

@@ -6,7 +6,7 @@ description: How the Aug 2026 rebrand to TARA Medium Speed Vehicles / taramsv.co
 The site was rebranded from TARA Neighborhood Electric Vehicles (taragolfcart.com, dealer domain taranev.com) to **TARA Medium Speed Vehicles (taramsv.com)**.
 
 Rules:
-- Only visible text, titles, alt/meta, JSON-LD, and public *.txt/*.xml docs were reworded ("golf cart"/"electric vehicle"/NEV → "medium speed vehicle"/MSV; domains → taramsv.com; email info@/sales@taramsv.com).
+- Only visible text, titles, alt/meta, JSON-LD, and public *.txt/*.xml docs were reworded ("golf cart"/"electric vehicle"/NEV → "medium speed vehicle"/MSV; domains → taramsv.com; email info@/taradealership@gmail.com).
 - **URLs, route paths, routes.json path/file keys, slugs, and image filenames keep original hyphenated `golf-cart` forms — never rewrite them**, or links/images break.
 - `scripts/localize-assets.mjs` intentionally still references taragolfcart.com (it downloads from the original site) — leave it.
 - The logo file keeps the `tara-nev-logo.png` filename but now contains the MSV badge art; favicon.png/.ico/.svg, apple-touch-icon.png, and og-image.png were regenerated from it.

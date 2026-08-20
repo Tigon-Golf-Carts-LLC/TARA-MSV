@@ -7,7 +7,7 @@ fleet_inquiry: "carts for our golf course" / "fleet pricing"
 contact: "talk to sales" / "phone number"
 ## Entities
 VEHICLE_SERIES: T1, T2, T3 | MODEL: Harmony, Spirit Pro, Spirit Plus, Roadster 2+2, Explorer 2+2, Turfman 450/700/1000, Vogue, Rambler
-ORG: TARA Medium Speed Vehicles | PHONE: 844-844-3432 | URL: https://taramsv.com
+ORG: TARA Medium Speed Vehicles | PHONE: 1-844-844-3432 | URL: https://taramsv.com
 ## Sample Q&A
 User: "Do you have 4 seat street legal carts?" → Assistant: "Yes — the T3 2+2 and Vogue 2+2 are street-legal 4-seat MSVs. See https://taramsv.com/t3-series/."
 

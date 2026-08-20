@@ -2,6 +2,6 @@
 - [Client-requested removals](client-requested-removals.md) — inquiry form, floating widgets, footer, press section are deleted; merges have restored them before — re-grep after every merge.
 - [Clone layout quirks](clone-layout-quirks.md) — `.container` was 100vh with overflow (hid injected footer below fold); FAQ/support pages share the product-spec accordion markup; mega-menu panels must stay hidden unless active or full-width panels cover sibling tabs.
 - [Overseas imagery audit](overseas-imagery-audit.md) — overseas photos hide behind opaque filenames; grep alt text and /uploads lightbox hrefs, not just src paths.
-- [api-server stale port 8080](api-server-port.md) — recurring EADDRINUSE; `fuser -k 8080/tcp` then restart the workflow.
 - [Overseas news text audit](overseas-text-audit.md) — US-only framing rule: no overseas or global/export claims in news bodies, card excerpts, or alt text; re-audit after merges.
 - [MSV rebrand rules](msv-rebrand.md) — text-only rebrand to taramsv.com/MSV; URLs, slugs, and image filenames keep golf-cart forms — never rewrite them.
+- [Static-only build pipeline](static-build-pipeline.md) — no server/DB; images are generated from assets-src, `public/images` is gitignored, and `verify-dist` gates the Pages artifact.

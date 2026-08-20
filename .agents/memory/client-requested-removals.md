@@ -21,6 +21,6 @@ Also: Press section was replaced by `/blog/` (12 original posts, files `content/
 - Header "English" flag button (div.language-flag) deleted from all pages; CSS guard added.
 - WARNING: language flags are <li class="language-flag"> inside <ul id="prisna-translator-seo">, NOT divs — balanced-div removal scripts corrupted 648 files once. Match the actual tag.
 - Header search button (<b id="btn-search">) deleted from all pages; CSS guard added.
-- Call Now button (tel:8448443432) is INTENTIONAL: injected site-wide by App.tsx (#tara-call-now) + styled in site.css. Do not remove when sweeping floating widgets. Dealership phone: 844-844-3432.
+- Call Now button (tel:+18448443432) is INTENTIONAL: injected site-wide by App.tsx (#tara-call-now) + styled in site.css. Do not remove when sweeping floating widgets. Dealership phone: 1-844-844-3432.
 
 - The "Online Service" floating tab is `<aside class="scrollsidebar">` — it survived in 577 pages unnoticed because the verify script didn't cover it (now it does). When something looks like a removed widget in a screenshot but greps clean, search for `side`/`aside` class fragments, not the visible label — the label may be image- or CSS-rendered.

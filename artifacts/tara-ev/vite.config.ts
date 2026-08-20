@@ -247,6 +247,28 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, 'dist'),
     emptyOutDir: true,
+    // GitHub Pages serves bytes as-is, so ship the smallest bytes we can.
+    minify: 'esbuild',
+    cssMinify: 'esbuild',
+    cssCodeSplit: true,
+    target: 'es2020',
+    sourcemap: false,
+    assetsInlineLimit: 4096,
+    reportCompressedSize: false,
+    modulePreload: { polyfill: false },
+    rollupOptions: {
+      output: {
+        // Keep the framework in its own long-cached chunk; everything else is
+        // tree-shaken into route chunks by Rollup's own code splitting.
+        manualChunks(id: string) {
+          if (!id.includes('node_modules')) return undefined;
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) {
+            return 'react-vendor';
+          }
+          return undefined;
+        },
+      },
+    },
   },
   server: {
     port,
