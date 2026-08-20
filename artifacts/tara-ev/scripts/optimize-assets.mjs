@@ -357,6 +357,26 @@ async function runEncodePhase() {
   }
   manifest.lookup = lookup;
 
+  // Prune orphans: anything under public/images that this run did not emit.
+  // The image cache is restored between CI runs, so derivatives of a deleted
+  // source would otherwise keep shipping long after the original is gone.
+  const emitted = new Set();
+  for (const meta of Object.values(manifest.images)) {
+    for (const v of meta.variants) emitted.add(v.url);
+  }
+  for (const abs of sources) {
+    const ext = path.extname(abs).toLowerCase();
+    if (ext === '.svg' || PASSTHROUGH.has(ext)) emitted.add(relKey(abs));
+  }
+  let orphans = 0;
+  for (const file of walk(OUT_DIR)) {
+    const url = '/images/' + path.relative(OUT_DIR, file).split(path.sep).join('/');
+    if (emitted.has(url)) continue;
+    fs.rmSync(file);
+    orphans++;
+  }
+  if (orphans) console.log(`[optimize-assets] Pruned ${orphans} orphaned derivative(s)`);
+
   fs.writeFileSync(MANIFEST_PATH, JSON.stringify(manifest) + '\n');
 
   console.log(
