@@ -47,3 +47,7 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Generated image derivatives — sources live in artifacts/tara-ev/assets-src/images
+# and are rebuilt by `pnpm --filter @workspace/tara-ev run optimize-assets`.
+artifacts/tara-ev/public/images/

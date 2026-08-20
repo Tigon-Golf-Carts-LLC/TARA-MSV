@@ -4,8 +4,20 @@ Full rebuild (clone) of the client's website, rebranded August 2026 from taragol
 
 ## Run & Operate
 
-- Workflow `artifacts/tara-ev: web` — the website (served at `/`)
+This is a **100% static site**. There is no server, no API and no database: every
+dynamic value is resolved at build time and baked into the output. `dist/` is
+plain files that GitHub Pages serves directly.
+
+- `pnpm --filter @workspace/tara-ev run dev` — local dev server
+- `pnpm --filter @workspace/tara-ev run build` — snapshot + SEO + images + bundle + prerender + verify
+- `pnpm --filter @workspace/tara-ev run build:site` — same, skipping the data-snapshot step
+- `pnpm --filter @workspace/tara-ev run preview` — serve `dist/` locally
 - `pnpm run typecheck` — full typecheck across all packages
+
+Deployment is `.github/workflows/deploy.yml` (push to `main` or manual dispatch)
+→ `actions/upload-pages-artifact` → `actions/deploy-pages`. `SITE_DOMAIN` and
+`BASE_PATH` live in the workflow `env:` block; `BASE_PATH` is `/` for a custom
+domain and `/<repo-name>/` for a project site.
 
 ## Stack
 
@@ -13,7 +25,12 @@ Full rebuild (clone) of the client's website, rebranded August 2026 from taragol
 - The site is a static content mirror: extracted page HTML lives in `artifacts/tara-ev/public/content/*.html` (one file per page, slugs use `__` for `/`), routed by `public/content/routes.json` (path → file, title, bodyClass)
 - `src/App.tsx` fetches the content file for `location.pathname`, injects it, then loads the site's original behavior script `public/js/jquery.min_index.js` (menus, sliders, tabs); the external Mautic inquiry-form script was removed at the client's request and replaced with a self-hosted form on the contact page (see "Client-requested removals")
 - Original site CSS: `public/css/site.css` (rewritten from the live site's stylesheet, all assets localized), `public/css/menu-image.css`
-- All 400+ images in `public/images/`, fonts (Poppins, FontAwesome) in `public/fonts/`
+- Image **sources** live in `artifacts/tara-ev/assets-src/images/` and are never deployed.
+  `scripts/optimize-assets.mjs` (sharp + svgo) generates `public/images/` — WebP at
+  400/800/1200/1600w, EXIF stripped, capped at 1600px — and rewrites every `<img>`
+  with `srcset`/`sizes`/`width`/`height`/`loading`/`decoding`. `public/images/` is
+  generated and gitignored; `assets-manifest.json` records the mapping.
+- Fonts in `public/fonts/` are woff2-only with `font-display` set
 
 ## Where things live
 
@@ -45,16 +62,28 @@ The client asked for these to be deleted site-wide. A past merge accidentally re
 
 Guard script: `artifacts/tara-ev/scripts/verify-removals.sh` (registered as validation step `verify-removals`) fails if any of these reappear.
 
-## Contact form (self-hosted replacement)
+## Contact (no backend)
 
-The contact page (`/contact/`) now uses a self-hosted inquiry form instead of the removed Mautic embed:
+Static hosting cannot accept a form post, so there is no contact form. Every
+call to action is a `mailto:` or `tel:` link:
 
-- Frontend: `artifacts/tara-ev/src/inquiryForm.ts` — renders the form and posts to the API server
-- Backend: `artifacts/api-server/src/routes/inquiries.ts` — validates and delivers via Gmail
-- Email delivery: `artifacts/api-server/src/lib/email.ts` — uses the Gmail Replit connector (`google-mail`)
-- Recipient: `sales@taramsv.com`
+- Email: `taradealership@gmail.com`
+- Phone: `1-844-844-3432` (links are `tel:+18448443432`)
+
+Both are injected site-wide by the footer in `src/App.tsx` and appear in the
+contact page content. If a real form is ever needed, point it at a third-party
+endpoint (Formspree / Netlify Forms / Google Forms) — never at a same-origin
+`/api/` route, which `scripts/verify-dist.mjs` fails the build on.
+
+The only `<form>` elements left are the theme's search boxes; `prerender.mjs`
+rewrites their `action="/search.php"` to Google site search at build time.
 
 ## Gotchas
 
 - Do not edit `public/content/*.html` image URLs back to cdn.globalso.com — all assets are localized
-- The self-hosted inquiry form mounts into `#tara-inquiry-form` (injected by App.tsx after the article element on form pages) — this is separate from the removed `inquiry-form-wrap` section
+- `public/content/routes.json` is the build-time authoring source (with per-route
+  descriptions). The client fetches the minified `content/site-snapshot.json`
+  emitted by `scripts/fetch-data.mjs`; `routes.json` is dropped from `dist/`.
+- Icons, `og-image` and the logo deliberately stay PNG (`KEEP_FORMAT` in
+  `optimize-assets.mjs`) — MIME-typed `<link rel="icon">` and social scrapers
+  need them. Everything else is WebP.

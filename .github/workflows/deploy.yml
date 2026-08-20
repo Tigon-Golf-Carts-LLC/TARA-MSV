@@ -15,6 +15,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  # Change these two to move the site. BASE_PATH is "/" for a custom domain or
+  # a <user>.github.io site, and "/<repo-name>/" for a project site.
   SITE_DOMAIN: https://taramsv.com
   BASE_PATH: /
 
@@ -40,7 +42,17 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Validate build-time data snapshot
+      # Image derivatives are deterministic for a given source tree, so reuse
+      # them across runs and only re-encode what actually changed.
+      - name: Restore optimized image cache
+        uses: actions/cache@v4
+        with:
+          path: artifacts/tara-ev/public/images
+          key: images-${{ hashFiles('artifacts/tara-ev/assets-src/images/**', 'artifacts/tara-ev/scripts/optimize-assets.mjs') }}
+          restore-keys: |
+            images-
+
+      - name: Build the data snapshot
         run: pnpm --filter @workspace/tara-ev run fetch-data
 
       - name: Build static site

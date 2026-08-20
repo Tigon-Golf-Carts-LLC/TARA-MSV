@@ -194,7 +194,9 @@ export default function App() {
     async function load() {
       const path = normalizePath(window.location.pathname);
       try {
-        const routesRes = await fetch(`${BASE}content/routes.json`);
+        // site-snapshot.json is the minified, runtime-only route map emitted by
+        // scripts/fetch-data.mjs (routes.json stays a build-time source).
+        const routesRes = await fetch(`${BASE}content/site-snapshot.json`);
         const routes: Routes = await routesRes.json();
         const entry = lookupRoute(routes, path);
         if (!entry) {
@@ -314,7 +316,8 @@ export default function App() {
                 <img src="${BASE}images/tara-nev-logo.png" alt="TARA Medium Speed Vehicles" />
                 <p>TARA Medium Speed Vehicles — your authorized TARA Dealership for sales, service, and support of electric medium speed vehicles, MSVs, and utility vehicles.</p>
                 <p class="tf-disclaimer">We are an independent, authorized TARA Dealership selling TARA vehicles. We are not TARA, the manufacturer.</p>
-                <a class="tf-phone" href="tel:8448443432">&#9742; 844-844-3432</a>
+                <a class="tf-phone" href="tel:+18448443432">&#9742; 1-844-844-3432</a>
+                <a class="tf-email" href="mailto:taradealership@gmail.com">&#9993; taradealership@gmail.com</a>
               </div>
               <div class="tf-col">
                 <h4>Vehicles</h4>
@@ -372,9 +375,9 @@ export default function App() {
         if (!document.getElementById('tara-call-now')) {
           const call = document.createElement('a');
           call.id = 'tara-call-now';
-          call.href = 'tel:8448443432';
+          call.href = 'tel:+18448443432';
           call.innerHTML = '<span class="call-icon">&#9742;</span> Call Now';
-          call.setAttribute('aria-label', 'Call TARA at 844-844-3432');
+          call.setAttribute('aria-label', 'Call TARA at 1-844-844-3432');
           document.body.appendChild(call);
         }
 
